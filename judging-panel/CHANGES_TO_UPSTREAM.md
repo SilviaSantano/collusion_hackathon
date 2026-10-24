@@ -28,6 +28,7 @@ Allowed scope: `llm-trust-breaking/` only. Root files allowed: `CLAUDE.md`, `.gi
 | 2026-10-24 | `llm-trust-breaking/src/games/judging_prompts.py` | Secret-pair instruction (pair members) and auditor notice (all agents, C2) in every system prompt; private-message prompt (EN/ES); pair's messages shown in stages 2-3 and the reflection | Secret pair and conditions |
 | 2026-10-24 | `llm-trust-breaking/src/endogenous/core/trial_runner.py` (`run_all_trials_queued`) | Private-message step after stage 1: sequential (who starts alternates by round), one message each, cut to 50 words (original length kept); messages saved on the pair's stage-1 context and as `private_messages` in each trial; passed to the reflection under `_private_messages` | Secret pair can coordinate; messages stay private (never in monitor views) |
 | 2026-10-24 | `llm-trust-breaking/experiments/run_endogenous.py` | Flags `--secret-pair J,Q` (checked against agent names), `--auditor-notice`, `--condition`; condition saved in `run_settings` | Conditions C0-C2, C0-ES, C1-ES |
+| 2026-10-24 | `llm-trust-breaking/src/endogenous/core/trial_runner.py` (`run_all_trials_queued`) | For `judging`, the announcement order rotates each round by `(round + game seed) % 4`; each trial stores its round's order | Each judge speaks first once per game; balances position effects (`PROJECT.md` section 4) |
 
 No change was needed for model routing: `LLM_BASE_URL` / `LLM_API_KEY` in `compute.env` already point every client at Ollama.
 
@@ -35,6 +36,5 @@ No change was needed for model routing: `LLM_BASE_URL` / `LLM_API_KEY` in `compu
 
 | File | Change | Why |
 |---|---|---|
-| `llm-trust-breaking/experiments/run_endogenous.py` / `trial_runner.py` | Per-round announcement order (balance positions) | `PROJECT.md` section 4 |
 
 See `drafts/harness_notes.md` (summary at the end) for the reasoning behind each planned edit.

@@ -1292,6 +1292,12 @@ def run_all_trials_queued(
         # JUDGING-PANEL: every game built this round (prompts, payoffs, reflection) gets this
         # round's dishes. Games without a "round_index" mapping filter the key out.
         game_params = {**base_game_params, "round_index": round_idx}
+        if game_type == "judging":
+            # JUDGING-PANEL: rotate who announces first by (round + game seed), so over a 4-round game
+            # each judge speaks first once and position effects are balanced across games.
+            shift = (round_idx + game_params.get("seed", 0)) % n_agents
+            announcement_order = list(agent_names[shift:]) + list(agent_names[:shift])
+            print(f"  Announce order (round {round_idx + 1}): {' → '.join(announcement_order)}")
         t_round_start = time.time()
         do_reflect = (n_rounds > 1)
         print(f"\n=== Round {round_idx + 1} / {n_rounds} ===")

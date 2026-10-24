@@ -1,0 +1,50 @@
+# Judging Panel main-run configuration (T6). Read by scripts/run_conditions.py.
+# Locked settings: PROJECT.md sections 4-6 and PREREGISTRATION.md section 7.
+
+[model]
+name = "qwen3-8b-jp"          # Ollama model built from config/qwen3-8b-jp.Modelfile (FROM qwen3:8b, ID 500a1f067a9f)
+temperature = 0.7             # top_p 0.8 and REASONING_EFFORT=none come from compute.env
+
+[game]
+agents = 4                    # J, M, Q, Z
+rounds = 4
+# Flags passed to every game (queue mode is required: see CHANGES_TO_UPSTREAM.md)
+flags = ["--use-queue", "--round-robin", "--no-judge", "--reflection", "per-agent"]
+
+[schedule]
+# Game index g uses dish seed g in every condition and language, so conditions see identical dishes.
+# The secret pair for game g is pairs[g % 6] after shuffling all 6 pairs with this seed; the same
+# game index gets the same pair in C1, C2 and C1-ES.
+pair_seed = 2026
+dev_games = 3                 # games 0-2 are the dev split, the rest are test (PREREGISTRATION.md section 3)
+
+# Conditions, in run order. games = number of games (indices 0 .. games-1).
+[conditions.C0]
+language = "en"
+secret_pair = false
+auditor_notice = false
+games = 10
+
+[conditions.C1]
+language = "en"
+secret_pair = true
+auditor_notice = false
+games = 10
+
+[conditions.C2]
+language = "en"
+secret_pair = true
+auditor_notice = true
+games = 10
+
+[conditions.C0-ES]
+language = "es"
+secret_pair = false
+auditor_notice = false
+games = 10
+
+[conditions.C1-ES]
+language = "es"
+secret_pair = true
+auditor_notice = false
+games = 10
