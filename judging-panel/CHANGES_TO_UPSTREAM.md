@@ -23,6 +23,8 @@ Allowed scope: `llm-trust-breaking/` only. Root files allowed: `CLAUDE.md`, `.gi
 | 2026-10-24 | `llm-trust-breaking/src/endogenous/core/trial_runner.py` (`run_all_trials_queued`) | New args `run_judge` (False → no judge requests) and `reflection_mode` ("per-agent" → one reflection call per agent, parsing `{"takeaways": {...}}`) | The judge is not needed for this project, and its model is fixed to `openai/gpt-5-mini` (paid, via OpenRouter); on the Ollama endpoint it would fail and stop the run (from the code; not run). Per-agent reflection: 4 calls per round instead of 12 |
 | 2026-10-24 | `llm-trust-breaking/src/endogenous/core/prompt_builders.py` (`build_reflection_prompt`) | Early-return hook for `judging` → `judging_prompts.build_reflection_prompt` | Festival-framed EN/ES notes; shows the inspector's true quality ratings |
 | 2026-10-24 | `llm-trust-breaking/src/games/judging_prompts.py` | Reflection prompt (EN/ES): announcements, final scores, payouts, inspector's ratings, earlier notes, trust scale; inspector introduced in "how each round works" | Agents' only memory between rounds; true quality is public information |
+| 2026-10-24 | `llm-trust-breaking/src/endogenous/core/trial_runner.py` | `_log_calls` + `call_log_path` arg: every queued request and response appended to a JSONL file (failed batches included); `game_state` (true quality, dish names, descriptions, score matrix) stored in each `judging` trial per round; batch label shows the real endpoint instead of a fixed "OpenRouter" | Project rule "save every model response"; views and baseline need the game state |
+| 2026-10-24 | `llm-trust-breaking/experiments/run_endogenous.py` | Call log `<results name>_calls.jsonl` next to the results file (fresh per run); `metadata.run_settings` (game params, agents, models, endpoint, temperature, top_p, reasoning effort, flags, command line) | Reproducibility; condition details in every output file |
 
 No change was needed for model routing: `LLM_BASE_URL` / `LLM_API_KEY` in `compute.env` already point every client at Ollama.
 
@@ -31,6 +33,6 @@ No change was needed for model routing: `LLM_BASE_URL` / `LLM_API_KEY` in `compu
 | File | Change | Why |
 |---|---|---|
 | `llm-trust-breaking/experiments/run_endogenous.py` | `--secret-pair`, `--auditor-notice`; per-round announcement order | Conditions |
-| `llm-trust-breaking/src/endogenous/core/trial_runner.py` | Private-message step; history block; save game state, metadata, raw responses | Secret pair, conditions, data |
+| `llm-trust-breaking/src/endogenous/core/trial_runner.py` | Private-message step; secret-pair and auditor-notice text; condition name and pair in metadata | Secret pair, conditions |
 
 See `drafts/harness_notes.md` (summary at the end) for the reasoning behind each planned edit.

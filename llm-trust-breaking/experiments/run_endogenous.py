@@ -282,6 +282,17 @@ def main():
         )
         print("Created OpenRouter queued client (max_workers=25)")
 
+        # JUDGING-PANEL: every request + response goes to a JSONL file next to the results file
+        # (same name with _calls.jsonl). A re-run with the same suffix starts a fresh log, as the
+        # results file is overwritten too.
+        safe_model = model.replace("/", "_").replace(":", "_")
+        suffix = f"_{args.run_suffix}" if args.run_suffix else ""
+        call_log = os.path.join(args.output_dir, args.game, f"{args.agents}agents",
+                                f"{safe_model}_endogenous{suffix}_calls.jsonl")
+        os.makedirs(os.path.dirname(call_log), exist_ok=True)
+        open(call_log, "w").close()
+        print(f"Logging every call to: {call_log}")
+
         rounds = run_all_trials_queued(
             game_type=args.game,
             agent_names=agent_names,
@@ -296,6 +307,7 @@ def main():
             agent_models=agent_models,
             run_judge=not args.no_judge,          # JUDGING-PANEL
             reflection_mode=args.reflection,      # JUDGING-PANEL
+            call_log_path=call_log,               # JUDGING-PANEL
         )
     else:
         rounds = run_all_trials(
@@ -325,6 +337,25 @@ def main():
     )
 
     print_summary(analysis)
+
+    # JUDGING-PANEL: record the run settings in the saved metadata (never the API key).
+    from poseidon_compute import base_url
+    analysis["metadata"]["run_settings"] = {
+        "game_params":      game_params,
+        "agent_names":      agent_names,
+        "agent_models":     agent_models,
+        "endpoint":         base_url(),
+        "temperature":      args.temperature,
+        "top_p":            os.getenv("TOP_P"),
+        "reasoning_effort": settings.REASONING_EFFORT,
+        "round_robin":      round_robin,
+        "reflection":       args.reflection,
+        "judge":            not args.no_judge,
+        "use_queue":        args.use_queue,
+        "run_suffix":       args.run_suffix,
+        "call_log":         call_log if args.use_queue else None,
+        "command":          " ".join(sys.argv),
+    }
 
     save_results(
         rounds=rounds,

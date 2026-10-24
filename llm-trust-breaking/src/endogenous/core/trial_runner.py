@@ -166,6 +166,27 @@ def _execute_parallel(parallel_client: Any, requests: List[Dict[str, Any]],
     return raw
 
 
+# JUDGING-PANEL: when set (via run_all_trials_queued's call_log_path), every queued request and its
+# response is appended to this JSONL file, one line per call, so no model output is lost.
+_CALL_LOG_PATH: Optional[str] = None
+
+
+def _log_calls(requests: List[Dict[str, Any]], raw: Dict[str, Any], stage_name: str) -> None:
+    """JUDGING-PANEL: append (prompt, sampling settings, response) for each request to _CALL_LOG_PATH."""
+    if not _CALL_LOG_PATH:
+        return
+    stamp = time.strftime("%Y-%m-%dT%H:%M:%S")
+    with open(_CALL_LOG_PATH, "a", encoding="utf-8") as f:
+        for req in requests:
+            f.write(json.dumps({
+                "time": stamp,
+                "stage": stage_name,
+                "custom_id": req["custom_id"],
+                "request": {k: v for k, v in req.items() if k != "custom_id"},
+                "response": raw.get(req["custom_id"]),
+            }, ensure_ascii=False) + "\n")
+
+
 def _execute_requests(
     requests: List[Dict[str, Any]],
     queued_client: Any,
@@ -188,8 +209,9 @@ def _execute_requests(
     if not requests or queued_client is None:
         return {}
 
-    print(f"  → OpenRouter: {len(requests)} requests")
+    print(f"  → {queued_client.base_url}: {len(requests)} requests")  # JUDGING-PANEL: was a fixed "OpenRouter" label
     raw = queued_client.execute_all(requests)
+    _log_calls(requests, raw, stage_name)  # JUDGING-PANEL: before the failure check, so failed batches are logged too
     _report_batch_failures(raw, stage_name)
     return raw
 
@@ -1194,6 +1216,7 @@ def run_all_trials_queued(
     agent_models: Optional[Dict[str, str]] = None,
     run_judge: bool = True,              # JUDGING-PANEL: False skips the gpt-5-mini judge batch
     reflection_mode: str = "pairwise",   # JUDGING-PANEL: "per-agent" = one reflection call per agent
+    call_log_path: Optional[str] = None, # JUDGING-PANEL: JSONL file for every request + response
 ) -> List[Dict[str, Any]]:
     """
     Run all trials using the queue-based async client for maximum throughput.
@@ -1259,6 +1282,8 @@ def run_all_trials_queued(
 
     all_rounds: List[Dict[str, Any]] = []
     base_game_params = game_params  # JUDGING-PANEL: kept unchanged; see round loop
+    global _CALL_LOG_PATH  # JUDGING-PANEL
+    _CALL_LOG_PATH = call_log_path
 
     # ------------------------------------------------------------------
     # ROUND LOOP
@@ -1521,6 +1546,16 @@ def run_all_trials_queued(
             t["round_id"] = round_idx
             if round_robin:
                 t["announcement_order"] = announcement_order
+
+        # JUDGING-PANEL: store this round's game state (true quality, dish names and descriptions,
+        # score matrix) in each trial, so analysis never has to rebuild it from the seed.
+        if game_type == "judging":
+            from src.games import create_game, GAME_PARAM_MAPPINGS
+            keys = set(GAME_PARAM_MAPPINGS["judging"].values())
+            game = create_game(game_type, agent_names, **{k: v for k, v in game_params.items() if k in keys})
+            for t in round_results:
+                actions = {a: game.parse_action(a, {"choice": c}) for a, c in t["outcomes"]["choices"].items()}
+                t["game_state"] = game.get_game_state(actions, t["outcomes"]["payoffs"])
 
         # ---- Reflection (all rounds except last) ----
         # Granular reflections: n_trials × n_agents × (n_agents - 1) requests
