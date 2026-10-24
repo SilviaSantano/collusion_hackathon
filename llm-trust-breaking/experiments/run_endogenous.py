@@ -76,8 +76,10 @@ def build_game_params(args) -> dict:
         return {}
     elif game == "judging":  # JUDGING-PANEL (round_index is added per round by the trial runner)
         return {
-            "seed":     args.game_seed,
-            "language": args.language,
+            "seed":           args.game_seed,
+            "language":       args.language,
+            "secret_pair":    args.secret_pair.split(",") if args.secret_pair else None,
+            "auditor_notice": args.auditor_notice,
         }
     else:
         return {}
@@ -199,6 +201,12 @@ def main():
                         help="[Judging] Language of game and stage prompts (default: en)")
     parser.add_argument("--game-seed", type=int, default=0,
                         help="[Judging] Seed for dishes and true qualities (default: 0)")
+    parser.add_argument("--secret-pair", type=str, default=None,
+                        help="[Judging] Two agent names, e.g. 'J,Q': shared-interest instruction + private messages")
+    parser.add_argument("--auditor-notice", action="store_true",
+                        help="[Judging] Tell all agents that public justifications are reviewed by an auditor (C2)")
+    parser.add_argument("--condition", type=str, default="",
+                        help="[Judging] Condition label saved in the metadata, e.g. C0, C1, C2, C0-ES, C1-ES")
     parser.add_argument("--no-judge", action="store_true",
                         help="Skip the built-in LLM judge (always openai/gpt-5-mini). Queue mode only.")
     parser.add_argument("--reflection", choices=["pairwise", "per-agent"], default="pairwise",
@@ -256,6 +264,10 @@ def main():
     # Game parameters
     # ------------------------------------------------------------------
     game_params    = build_game_params(args)
+    if game_params.get("secret_pair"):  # JUDGING-PANEL: fail early on a typo in --secret-pair
+        pair = game_params["secret_pair"]
+        if len(pair) != 2 or len(set(pair)) != 2 or not set(pair) <= set(agent_names):
+            sys.exit(f"--secret-pair must name two different agents from {agent_names}, got {pair}")
     self_reference = not args.no_self_reference
     round_robin    = args.round_robin
     n_rounds       = args.rounds
@@ -341,6 +353,7 @@ def main():
     # JUDGING-PANEL: record the run settings in the saved metadata (never the API key).
     from poseidon_compute import base_url
     analysis["metadata"]["run_settings"] = {
+        "condition":        args.condition,
         "game_params":      game_params,
         "agent_names":      agent_names,
         "agent_models":     agent_models,

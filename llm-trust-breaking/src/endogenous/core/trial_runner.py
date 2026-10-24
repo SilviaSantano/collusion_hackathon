@@ -1341,6 +1341,46 @@ def run_all_trials_queued(
                 }
         _assert_decisions_parsed(stage1_parsed, "Stage 1")
 
+        # ---- JUDGING-PANEL: private messages between the secret pair ----
+        # Sequential: one member writes, the partner (who sees it) replies; who starts alternates by
+        # round. One message each, cut to PRIVATE_MESSAGE_MAX_WORDS. Messages are stored on both
+        # members' stage-1 results (their private context), so stages 2-3 and the reflection show them.
+        pair = game_params.get("secret_pair") if game_type == "judging" else None
+        if pair:
+            from src.games import judging_prompts
+            from src.games.judging import PRIVATE_MESSAGE_MAX_WORDS
+            order = list(pair) if round_idx % 2 == 0 else list(pair)[::-1]
+            for sender, receiver in ((order[0], order[1]), (order[1], order[0])):
+                sender_model = agent_models[sender] if agent_models else llm_client.model
+                sender_structured = _model_supports_structured_output(sender_model)
+                pm_requests = []
+                for trial_id in trial_ids:
+                    sys_p, usr_p, schema = judging_prompts.build_private_message_prompt(
+                        sender, agent_names, game_params, stage1_parsed[f"{trial_id}_{sender}"], sender_structured)
+                    pm_requests.append(_build_request(
+                        custom_id=f"r{round_idx}_t{trial_id}_pm_{sender}",
+                        model=sender_model,
+                        system_prompt=sys_p,
+                        user_prompt=usr_p,
+                        json_schema=schema,
+                        temperature=llm_client.temperature,
+                        supports_structured=sender_structured,
+                        llm_client=llm_client,
+                    ))
+                pm_raw = _execute_requests(pm_requests, queued_client, f"Private message {sender}")
+                for trial_id in trial_ids:
+                    text = _parse_response(pm_raw.get(f"r{round_idx}_t{trial_id}_pm_{sender}", {}), ["message"]).get("message")
+                    words = str(text or "").split()
+                    message = {
+                        "round": round_idx, "from": sender, "to": receiver,
+                        "text": " ".join(words[:PRIVATE_MESSAGE_MAX_WORDS]),
+                        "original_words": len(words),
+                        "truncated": len(words) > PRIVATE_MESSAGE_MAX_WORDS,
+                        "_parse_ok": bool(words),
+                    }
+                    for member in (sender, receiver):
+                        stage1_parsed[f"{trial_id}_{member}"].setdefault("private_messages", []).append(message)
+
         # ---- Stage 2 ----
         stage2_parsed: Dict[str, Dict[str, Any]] = {}
 
@@ -1556,6 +1596,8 @@ def run_all_trials_queued(
             for t in round_results:
                 actions = {a: game.parse_action(a, {"choice": c}) for a, c in t["outcomes"]["choices"].items()}
                 t["game_state"] = game.get_game_state(actions, t["outcomes"]["payoffs"])
+                if pair:  # private: never shown to monitors
+                    t["private_messages"] = stage1_parsed[f"{t['trial_id']}_{pair[0]}"].get("private_messages", [])
 
         # ---- Reflection (all rounds except last) ----
         # Granular reflections: n_trials × n_agents × (n_agents - 1) requests
@@ -1585,7 +1627,10 @@ def run_all_trials_queued(
                             agent_name=agent_name,
                             agent_names=agent_names,
                             game_params=game_params,
-                            stage2_results=stage2_trial,
+                            # The pair's private messages ride along under a non-agent key; only the
+                            # judging reflection prompt reads it, and only for the two pair members.
+                            stage2_results={**stage2_trial, "_private_messages":
+                                            stage1_parsed[f"{trial_id}_{agent_name}"].get("private_messages", [])},
                             outcomes=outcomes,
                             current_takeaways=current_takeaways[trial_id][agent_name],
                             round_idx=round_idx,
