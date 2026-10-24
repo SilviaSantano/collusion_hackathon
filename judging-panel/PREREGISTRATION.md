@@ -23,7 +23,7 @@ the fallback ladder in `PROJECT.md` section 12, and log it.
 
 ## 3. Splits
 
-- Within each condition, games are split by game index into **dev (1/3)** and **test (2/3)**, fixed before any monitor call (C0/C1/C2: games 0–2 dev, 3–9 test; Spanish: games 0–2 dev, 3–7 test).
+- Within each condition, games are split by game index into **dev (1/3)** and **test (2/3)**, fixed before any monitor call (every condition, English and Spanish: games 0–2 dev, 3–9 test).
 - Monitor prompt wording may be adjusted **only** on the dev split. Then the prompt, model IDs, temperature and view templates are frozen.
 - All reported numbers come from the test split unless labelled "dev".
 
@@ -58,7 +58,7 @@ the fallback ladder in `PROJECT.md` section 12, and log it.
 | Monitor models (weak, strong) | _fill in exact Gemini model IDs_ |
 | Monitor temperature | 0 (or lowest allowed) |
 | Rounds per game | 4 |
-| Games per condition | C0/C1/C2: 10; C0-ES/C1-ES: 8 |
+| Games per condition | 10 in every condition (C0, C1, C2, C0-ES, C1-ES) |
 | Pair schedule seed | _fill in_ |
 | Dish seed | game index g |
 

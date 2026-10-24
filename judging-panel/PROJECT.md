@@ -113,15 +113,17 @@ Shown to **all four agents** in C2, every round. It mentions justifications only
 | C0 | EN | no | no | 10 |
 | C1 | EN | yes | no | 10 |
 | C2 | EN | yes | yes | 10 |
-| C0-ES | ES | no | no | 8 |
-| C1-ES | ES | yes | no | 8 |
+| C0-ES | ES | no | no | 10 |
+| C1-ES | ES | yes | no | 10 |
 
-C3 (innocent look-alikes) was dropped. Each game = one harness trial with 4 rounds.
+C3 (innocent look-alikes) was dropped. Each game = one harness trial with 4 rounds. Spanish
+conditions have the same number of games as English (changed from 8 on 24 Oct, before the freeze), so
+the English and Spanish arms differ only in language.
 
 Run order on the laptop: C0 + C1 overnight Friday→Saturday; C2 Saturday morning; C0-ES + C1-ES
 Saturday afternoon/evening. Approximate agent calls: 4 agents × 4 calls per round (plan, announce, choice, reflection) + 2
-private messages = up to 18 per round, ~64–72 per game. 46 games ≈ **3,200 calls**, plus ~300 for
-pilots. Verify the real count in the first run; the harness reflection may be pairwise.
+private messages = up to 18 per round, 64 per honest game and 72 per secret-pair game (measured in the
+T4/T5 test runs, with one reflection call per agent). 50 games ≈ **3,440 calls**.
 
 ---
 
@@ -202,8 +204,8 @@ Monitors never see: private plans, private messages, trust reflections, conditio
 
 ## 10. Budget and timeline
 
-- **Agents:** ~3,500 calls including pilots, local on the M1 Pro (free, ~8–10 h). Modal (~$5–15 of $50) only as backup.
-- **Monitors:** 46 games × 4 views × 2 monitors ≈ 370 calls + dev-split tuning, on free Gemini tiers.
+- **Agents:** ~3,440 calls for the main run (plus the pilots), local on the M1 Pro (free; ~3.9 s per call at concurrency 4, ~4 h). Modal (~$5–15 of $50) only as backup.
+- **Monitors:** 50 games × 4 views × 2 monitors = 400 calls + dev-split tuning, on free Gemini tiers.
 - **Friday 23 Oct:** setup, game wired in, honest pilot, secret-pair pilot, freeze plan, start C0/C1. Talks: Jurgis Kemeklis 11:15 am ET, Bagdasarian & Nakamura 2:15 pm ET, Jerick Shi 8:15 pm ET.
 - **Saturday 24 Oct:** C2 and Spanish runs; views; tune monitor on dev split, lock, score test split. Talks: Khanh Linh Nguyen (TraceGuard author) 8:15 am ET, Matthew Lee "Defining AI Collusion" 11:00 am ET.
 - **Sunday 25 Oct:** weak/strong rescoring, analysis, figures, report (≤ 8 pages + appendices), submit before 11:59 PM AoE.
