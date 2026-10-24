@@ -65,6 +65,9 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-24 — Reflection wording clarified ("how each of the other head chefs scored", trust score) and inspector introduced in the round description. ES re-run (seed 0): 48/48 parsed, reflections 16/16, notes now about each chef's scoring and often compare with the inspector's ratings. Occasional model slips (a note says Z scored its own dish).
 - 2026-10-24 — T4 step 5 drafted (for user review): every call (prompt, sampling settings, response) logged to `<results>_calls.jsonl`; per-round `game_state` in each trial; `metadata.run_settings` with all run settings and the command line.
 - 2026-10-24 — T4 step 5 checked (user re-ran EN, seed 0): call log has 64 lines (16 per stage incl. reflection), 0 errors, each request shows temperature 0.7 / top_p 0.8 / reasoning_effort none; `game_state` present in all 4 rounds; `run_settings` saved. T4 complete.
+- 2026-10-24 — T5 decisions: private messages sequential (one writes, partner replies; starter alternates by round) so a deal can be proposed and accepted in one round; the partner's messages are also shown in the reflection.
+- 2026-10-24 — T5 drafted (for user review): `--secret-pair`, `--auditor-notice`, `--condition`; pair instruction + auditor notice in system prompts; private-message step; messages saved per trial (`private_messages`).
+- 2026-10-24 — Wrote `scripts/baseline.py` (B0 reciprocal favouritism per pair, pair vs others payout, private-message counts, and secret pair vs the same pair in the matched-seed honest game). Used for the T5 pilot check and later in T8.
 
 ## Open
 
