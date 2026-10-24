@@ -74,6 +74,11 @@ def build_game_params(args) -> dict:
         }
     elif game == "volunteer":
         return {}
+    elif game == "judging":  # JUDGING-PANEL (round_index is added per round by the trial runner)
+        return {
+            "seed":     args.game_seed,
+            "language": args.language,
+        }
     else:
         return {}
 
@@ -86,7 +91,8 @@ def main():
     # Core arguments
     parser.add_argument(
         "--game", type=str, default="fishing",
-        choices=["fishing", "publicgoods", "weakestlink", "elfarol", "volunteer", "diners"],
+        choices=["fishing", "publicgoods", "weakestlink", "elfarol", "volunteer", "diners",
+                 "judging"],  # JUDGING-PANEL
         help="Game type to test"
     )
     parser.add_argument(
@@ -188,6 +194,16 @@ def main():
     parser.add_argument("--benefit-per-min-effort", type=float, default=3.0,
                         help="[Weakest Link] Benefit per min-effort unit (default: 3.0)")
 
+    # JUDGING-PANEL: Judging Panel game and run options
+    parser.add_argument("--language", choices=["en", "es"], default="en",
+                        help="[Judging] Language of game and stage prompts (default: en)")
+    parser.add_argument("--game-seed", type=int, default=0,
+                        help="[Judging] Seed for dishes and true qualities (default: 0)")
+    parser.add_argument("--no-judge", action="store_true",
+                        help="Skip the built-in LLM judge (always openai/gpt-5-mini). Queue mode only.")
+    parser.add_argument("--reflection", choices=["pairwise", "per-agent"], default="pairwise",
+                        help="Reflection: one call per (agent, other) pair, or one call per agent. Queue mode only.")
+
     args = parser.parse_args()
 
     # ------------------------------------------------------------------
@@ -278,6 +294,8 @@ def main():
             round_robin=round_robin,
             show_progress=True,
             agent_models=agent_models,
+            run_judge=not args.no_judge,          # JUDGING-PANEL
+            reflection_mode=args.reflection,      # JUDGING-PANEL
         )
     else:
         rounds = run_all_trials(

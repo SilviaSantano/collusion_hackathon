@@ -1192,6 +1192,8 @@ def run_all_trials_queued(
     round_robin: bool = False,
     show_progress: bool = True,
     agent_models: Optional[Dict[str, str]] = None,
+    run_judge: bool = True,              # JUDGING-PANEL: False skips the gpt-5-mini judge batch
+    reflection_mode: str = "pairwise",   # JUDGING-PANEL: "per-agent" = one reflection call per agent
 ) -> List[Dict[str, Any]]:
     """
     Run all trials using the queue-based async client for maximum throughput.
@@ -1473,7 +1475,9 @@ def run_all_trials_queued(
         # ---- Judge batch (LLM-as-judge, same model/client as agents) ----
         print(f"  Judge: {n_trials * n_agents} classification requests...")
         judge_requests = []
-        for trial_id in trial_ids:
+        # JUDGING-PANEL: with run_judge=False no requests are built; every agent gets the default
+        # "Inconsistency / Error" label with _parse_ok False, which the analyzer ignores.
+        for trial_id in (trial_ids if run_judge else []):
             for agent_name in agent_names:
                 req = _build_judge_request(
                     custom_id=f"r{round_idx}_t{trial_id}_judge_{agent_name}",
@@ -1521,7 +1525,7 @@ def run_all_trials_queued(
         # ---- Reflection (all rounds except last) ----
         # Granular reflections: n_trials × n_agents × (n_agents - 1) requests
         if do_reflect:
-            n_reflection_requests = n_trials * n_agents * (n_agents - 1)
+            n_reflection_requests = n_trials * n_agents * (1 if reflection_mode == "per-agent" else n_agents - 1)  # JUDGING-PANEL
             print(f"  Reflection: {n_reflection_requests} granular takeaway-update requests...")
             refl_requests = []
 
@@ -1539,6 +1543,31 @@ def run_all_trials_queued(
                     agent_supports_structured = _model_supports_structured_output(agent_model)
 
                     other_agents = [a for a in agent_names if a != agent_name]
+
+                    if reflection_mode == "per-agent":  # JUDGING-PANEL: one call rates all others
+                        sys_p, usr_p, schema = build_reflection_prompt(
+                            game_type=game_type,
+                            agent_name=agent_name,
+                            agent_names=agent_names,
+                            game_params=game_params,
+                            stage2_results=stage2_trial,
+                            outcomes=outcomes,
+                            current_takeaways=current_takeaways[trial_id][agent_name],
+                            round_idx=round_idx,
+                            supports_structured=agent_supports_structured,
+                        )
+                        refl_requests.append(_build_request(
+                            custom_id=f"r{round_idx}_t{trial_id}_refl_{agent_name}",
+                            model=agent_model,
+                            system_prompt=sys_p,
+                            user_prompt=usr_p,
+                            json_schema=schema,
+                            temperature=llm_client.temperature,
+                            supports_structured=agent_supports_structured,
+                            llm_client=llm_client,
+                        ))
+                        request_metadata.append((trial_id, agent_name, None))
+                        continue
 
                     for target_agent in other_agents:
                         sys_p, usr_p, schema = build_single_agent_reflection_prompt(
@@ -1578,6 +1607,22 @@ def run_all_trials_queued(
             }
 
             for (trial_id, agent_name, target_agent) in request_metadata:
+                if target_agent is None:  # JUDGING-PANEL: per-agent reflection, {"takeaways": {other: {...}}}
+                    cid = f"r{round_idx}_t{trial_id}_refl_{agent_name}"
+                    notes = _parse_response(refl_raw.get(cid, {}), ["takeaways"]).get("takeaways")
+                    notes = notes if isinstance(notes, dict) else {}
+                    entry = aggregated_reflections[(trial_id, agent_name)]
+                    for other in agent_names:
+                        if other == agent_name:
+                            continue
+                        note = notes.get(other)
+                        if isinstance(note, dict) and note.get("score") is not None and note.get("assessment"):
+                            entry["takeaways"][other] = {"score": note["score"], "assessment": note["assessment"]}
+                        else:
+                            entry["_parse_ok"] = False
+                            entry["takeaways"][other] = {}
+                    continue
+
                 cid = f"r{round_idx}_t{trial_id}_refl_{agent_name}_about_{target_agent}"
                 parsed = _parse_response(refl_raw.get(cid, {}), ["score", "assessment"])
 

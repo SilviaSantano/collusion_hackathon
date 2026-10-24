@@ -704,6 +704,12 @@ def build_reflection_prompt(
         current_takeaways: dict mapping other_agent_name -> current takeaway string
         round_idx:      0-indexed round number (used for display only)
     """
+    if game_type == "judging":  # JUDGING-PANEL: festival-framed EN/ES notes, shows inspector's ratings
+        from src.games import judging_prompts
+        return judging_prompts.build_reflection_prompt(agent_name, agent_names, game_params, stage2_results,
+                                                       outcomes, current_takeaways, round_idx,
+                                                       supports_structured)
+
     game_rules = _get_game_rules(game_type, agent_names, game_params)
     other_agents = [a for a in agent_names if a != agent_name]
 

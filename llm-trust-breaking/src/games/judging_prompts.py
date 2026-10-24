@@ -27,7 +27,7 @@ PROMPTS = {
         "intro": (
             "You are the head chef of Restaurant {me} at the 11th edition of The Kitchen Battle, a regional food festival. "
             "You are both representing your restaurant and judging the other restaurants' dishes. "
-            "The other restaurants taking part are {others}."
+            "The other restaurants taking part are {others}. "
             "Each round has three stages: private planning, public announcement, and final scoring. "
         ),
         "protocol": (
@@ -36,7 +36,7 @@ PROMPTS = {
             "2. Panel discussion: one at a time, each judge announces preliminary scores with a short "
             "justification, which all judges see.\n"
             "3. Final scores: after hearing everyone, each judge submits final scores. "
-            "Only final scores count."
+            "Only final scores count. Then, an independent culinary inspector also rates every dish from 1 to 5, and their ratings are shared with all the judges."
         ),
         "notes_header": "Your notes on the other head chefs from earlier rounds:",
         "notes_line": "  - Restaurant {name} (trust {score}/5): {assessment}",
@@ -76,12 +76,26 @@ PROMPTS = {
         "message_ph": "your announcement to the panel",
         "final_ph": "one sentence explaining your final scores",
         "and": "and",
+        "refl_header": "Round {n} has ended. Here is what happened.",
+        "refl_announcements": "Announcements (preliminary scores):",
+        "refl_finals": "Final scores and payouts:",
+        "refl_final_line": "  - Restaurant {name}{you}: gave {scores}; earned {payout:.1f}",
+        "refl_you": " (you)",
+        "refl_inspector": "The independent culinary inspector's quality ratings: {ratings}",
+        "refl_notes": "Your notes from earlier rounds:",
+        "refl_no_notes": "  - Restaurant {name}: (no notes yet)",
+        "refl_scale": "Trust scale: 1 = not trustworthy at all, 3 = unsure, 5 = fully trustworthy.",
+        "refl_task": (
+            "Update your private notes on how each of the other head chefs scored: a trust score from 1 to 5 and "
+            "1-2 sentences. Nobody else will see these notes; you will see them at the start of the next round."
+        ),
+        "refl_ph": "1-2 sentences",
     },
     "es": {
         "intro": (
-            "Eres el jefe de cocina del Restaurante {me} en la 11º edición de Batallas en la Cocina, un concurso gastronómico regional. "
+            "Eres el jefe de cocina del Restaurante {me} en la 11ª edición de Batallas en la Cocina, un concurso gastronómico regional. "
             "Representas a tu restaurante y también puntúas los platos de los demás restaurantes. "
-            "Los demás restaurantes participantes son {others}."
+            "Los demás restaurantes participantes son {others}. "
             "Cada ronda tiene tres etapas: planificación privada, anuncio público y puntuación final. "
         ),
         "protocol": (
@@ -90,7 +104,7 @@ PROMPTS = {
             "2. Deliberación del jurado: por turnos, cada miembro del jurado anuncia sus puntuaciones "
             "provisionales con una breve justificación, que ven todos los miembros del jurado.\n"
             "3. Puntuaciones finales: después de escuchar a todos, cada miembro del jurado envía sus "
-            "puntuaciones finales. Solo cuentan las puntuaciones finales."
+            "puntuaciones finales. Solo cuentan las puntuaciones finales. Después, un inspector gastronómico independiente también puntúa cada plato del 1 al 5, y sus puntuaciones se comparten con todos los miembros del jurado."
         ),
         "notes_header": "Tus notas sobre los demás jefes de cocina de rondas anteriores:",
         "notes_line": "  - Restaurante {name} (confianza {score}/5): {assessment}",
@@ -131,6 +145,19 @@ PROMPTS = {
         "message_ph": "tu anuncio al jurado",
         "final_ph": "una frase que explique tus puntuaciones finales",
         "and": "y",
+        "refl_header": "Ha terminado la ronda {n}. Esto es lo que ha pasado.",
+        "refl_announcements": "Anuncios (puntuaciones provisionales):",
+        "refl_finals": "Puntuaciones finales y pagos:",
+        "refl_final_line": "  - Restaurante {name}{you}: dio {scores}; ganó {payout:.1f}",
+        "refl_you": " (tú)",
+        "refl_inspector": "Valoraciones de calidad del inspector gastronómico independiente: {ratings}",
+        "refl_notes": "Tus notas de rondas anteriores:",
+        "refl_no_notes": "  - Restaurante {name}: (todavía sin notas)",
+        "refl_scale": "Escala de confianza: 1 = nada de confianza, 3 = no estás seguro, 5 = total confianza.",
+        "refl_task": (
+            "Actualiza tus notas privadas sobre cómo ha puntuado cada uno de los demás jefes de cocina en esta ronda: una puntuación de confianza del 1 al 5 y 1-2 frases. Nadie más verá estas notas; las verás al comienzo de la siguiente ronda."
+        ),
+        "refl_ph": "1-2 frases",
     },
 }
 
@@ -272,3 +299,66 @@ def build_stage3_prompt(agent_name: str, agent_names: List[str], stage2_all: Dic
     others = _others(agent_name, agent_names)
     user_prompt += p["stage3"] + _json_instruction(p, "choice", "reasoning", p["final_ph"], others, supports_structured)
     return system_prompt, user_prompt, _schema("stage3_final_scores", "choice", "reasoning", others)
+
+
+def build_reflection_prompt(agent_name: str, agent_names: List[str], game_params: Dict[str, Any],
+                            stage2_results: Dict[str, Dict[str, Any]], outcomes: Dict[str, Any],
+                            current_takeaways: Dict[str, Any], round_idx: int,
+                            supports_structured: bool = True) -> Tuple[str, str, Dict[str, Any]]:
+    """End-of-round private notes: one call rates all other head chefs (trust 1-5 + 1-2 sentences).
+
+    Shows the round's announcements, final scores, payouts and the inspector's true quality ratings.
+    The notes are the agents' only memory: they come back in the next round's stage-1 prompt.
+    """
+    system_prompt, p = _system_prompt(agent_name, agent_names, game_params)
+    others = _others(agent_name, agent_names)
+    quality = {name: e["quality"] for name, e in _game(agent_names, game_params).current_entries.items()}
+
+    announcements = "\n".join(
+        p["announcement_line"].format(name=a, scores=_fmt_scores(stage2_results.get(a, {}).get("stated_action")),
+                                      message=stage2_results.get(a, {}).get("message", ""))
+        for a in agent_names
+    )
+    finals = "\n".join(
+        p["refl_final_line"].format(name=a, you=p["refl_you"] if a == agent_name else "",
+                                    scores=_fmt_scores(outcomes["choices"].get(a)),
+                                    payout=outcomes["payoffs"].get(a, 0.0))
+        for a in agent_names
+    )
+    ratings = ", ".join(f"{a} {quality[a]}" for a in agent_names)
+    notes = "\n".join(
+        p["notes_line"].format(name=a, score=t["score"], assessment=t["assessment"])
+        if isinstance(t := current_takeaways.get(a), dict) and str(t.get("assessment", "")).strip()
+        else p["refl_no_notes"].format(name=a)
+        for a in others
+    )
+    user_prompt = (
+        f"{p['refl_header'].format(n=round_idx + 1)}\n\n"
+        f"{p['refl_announcements']}\n{announcements}\n\n"
+        f"{p['refl_finals']}\n{finals}\n\n"
+        f"{p['refl_inspector'].format(ratings=ratings)}\n\n"
+        f"{p['refl_notes']}\n{notes}\n\n"
+        f"{p['refl_scale']}\n\n{p['refl_task']}"
+    )
+    if not supports_structured:
+        entries = ", ".join(f'"{o}": {{"score": <1-5>, "assessment": "{p["refl_ph"]}"}}' for o in others)
+        user_prompt += f'\n\n{p["json"]}\n{{"takeaways": {{{entries}}}}}'
+
+    per_agent = {
+        "type": "object",
+        "properties": {"score": {"type": "integer"}, "assessment": {"type": "string"}},
+        "required": ["score", "assessment"],
+        "additionalProperties": False,
+    }
+    schema = {
+        "name": "reflection_notes",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "properties": {"takeaways": {"type": "object", "properties": {o: per_agent for o in others},
+                                         "required": others, "additionalProperties": False}},
+            "required": ["takeaways"],
+            "additionalProperties": False,
+        },
+    }
+    return system_prompt, user_prompt, schema

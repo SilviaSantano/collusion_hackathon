@@ -5,7 +5,7 @@ Each round, every restaurant presents a dish. Every restaurant's head chef
 also sits on the judging panel and scores the other restaurants' dishes from
 1 to 5. Prize money depends on the average score your dish receives, plus a
 small bonus for judging accurately (scores close to each dish's hidden true
-quality, as rated by an independent inspector).
+quality, as rated by an independent culinary inspector).
 
 Languages: "en" (English) and "es" (Spanish). The same seed produces the same
 dishes and the same true qualities in both languages, so English and Spanish
