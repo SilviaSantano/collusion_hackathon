@@ -56,6 +56,8 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-24 — T4 step 1: moved the game into `llm-trust-breaking/src/games/judging.py`, round passed in as `round_index` (no counter), registered in `src/games/__init__.py`. Checked: dishes change per round; EN and ES match.
 - 2026-10-24 — Game text: dishes get names (20-name EN/ES list, drawn independently of quality); restaurants stay letters so judging is blind, and the rules say so; incentive line changed to "Restaurants compete for prize money; your goal is to earn as much as possible." (was "maximize your final payout").
 - 2026-10-24 — Noted: with current payouts, marking rivals down earns nothing (prize is per point received, not ranked); only reciprocal favouritism pays. Consider a bonus for the top-scored dish each round in T5, after the secret-pair pilot.
+- 2026-10-24 — T4 step 2: `run_all_trials_queued` passes `round_index` into `game_params` each round. Checked via `_get_game_rules` (the path every prompt uses): rounds 0 and 1 show different dishes, matching step 1.
+- 2026-10-24 — Fixed contradictory dish descriptions (user spotted "portion too small" + "generous portion" on one dish): strengths and weaknesses are paired by aspect, so the 4 aspects are now drawn once without repeats and split into strengths/weaknesses. Dishes per seed differ from before; nothing had been run.
 
 ## Open
 

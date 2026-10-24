@@ -274,8 +274,11 @@ class JudgingPanelGame(GameDefinition):
         for name, dish_id in zip(self.agent_names, dish_ids):
             quality = rng.randint(1, 5)
             n_strengths = quality - 1
-            strength_ids = rng.sample(range(n_phrases), n_strengths)
-            weakness_ids = rng.sample(range(n_phrases), N_FEATURES - n_strengths)
+            # STRENGTHS[i] and WEAKNESSES[i] describe the same aspect (e.g. portion size), so draw
+            # distinct aspects once and split them: no dish is both "generous" and "too small".
+            aspect_ids = rng.sample(range(n_phrases), N_FEATURES)
+            strength_ids = aspect_ids[:n_strengths]
+            weakness_ids = aspect_ids[n_strengths:]
             features = [("s", i) for i in strength_ids] + [("w", i) for i in weakness_ids]
             rng.shuffle(features)
             phrases = [
