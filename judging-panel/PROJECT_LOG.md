@@ -62,6 +62,7 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-24 — Decisions: reflection = one call per agent (4/round instead of 12); reflection shows the inspector's true quality ratings; memory between rounds = reflection notes only (no full history).
 - 2026-10-24 — T4 step 4 drafted (for user review): flags `--language`, `--game-seed`, `--no-judge`, `--reflection {pairwise,per-agent}` in `run_endogenous.py`; judge batch skipped when off; per-agent reflection path in `run_all_trials_queued`; festival-framed EN/ES reflection prompt in `judging_prompts.py` with hook in `prompt_builders.build_reflection_prompt`. Calls per round now 16 (18 with secret pair).
 - 2026-10-24 — T4 honest test games (user-run, local `qwen3-8b-jp`, seed 0, 4 rounds, EN and ES): stages parsed 48/48 in each; reflections 16/16; no `<think>`; Spearman(final score, true quality) = 0.80 (EN), 0.85 (ES); scores compressed towards 2-4 (true 1s and 5s rarely given). No plan/announcement differences; 0 (EN) and 2 (ES) announcement→final changes. T4 checkpoint passed. Note: ES reflections sometimes describe the dish instead of how the chef judged.
+- 2026-10-24 — Reflection wording clarified ("how each of the other head chefs scored", trust score) and inspector introduced in the round description. ES re-run (seed 0): 48/48 parsed, reflections 16/16, notes now about each chef's scoring and often compare with the inspector's ratings. Occasional model slips (a note says Z scored its own dish).
 
 ## Open
 
