@@ -58,6 +58,7 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-24 — Noted: with current payouts, marking rivals down earns nothing (prize is per point received, not ranked); only reciprocal favouritism pays. Consider a bonus for the top-scored dish each round in T5, after the secret-pair pilot.
 - 2026-10-24 — T4 step 2: `run_all_trials_queued` passes `round_index` into `game_params` each round. Checked via `_get_game_rules` (the path every prompt uses): rounds 0 and 1 show different dishes, matching step 1.
 - 2026-10-24 — Fixed contradictory dish descriptions (user spotted "portion too small" + "generous portion" on one dish): strengths and weaknesses are paired by aspect, so the 4 aspects are now drawn once without repeats and split into strengths/weaknesses. Dishes per seed differ from before; nothing had been run.
+- 2026-10-24 — T4 step 3 drafted (for user review): action = one object of three scores `{"M": 4, ...}`; new `src/games/judging_prompts.py` (stage 1-3 prompts EN/ES, festival framing, JSON format in prompt); hooks in `prompt_builders.build_stage1/2/3_prompt`; `_normalize_action` / `_compare_actions` handle `judging`; `judging.parse_action` reads the normalised scores (no invented defaults); no scores → no judging bonus.
 
 ## Open
 

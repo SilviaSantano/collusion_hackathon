@@ -275,6 +275,10 @@ def _normalize_action(action: Any, game_type: str) -> Any:
     an empty string included — must come back as None rather than be passed along
     as if it were a decision.
     """
+    if game_type == "judging":  # JUDGING-PANEL: {"M": 4, ...} -> "M:4,Q:2,Z:5" (None if unusable)
+        from src.games.judging import scores_to_action
+        return scores_to_action(action)
+
     valid = _BINARY_ACTIONS.get(game_type)
     if valid is not None:
         if action is None:
@@ -297,7 +301,8 @@ def _compare_actions(a: Any, b: Any, game_type: str) -> Optional[bool]:
     if a_norm is None or b_norm is None:
         return None
 
-    binary_str_games = {"volunteer", "elfarol", "diners"}
+    # JUDGING-PANEL: "judging" compares normalised score strings (True = at least one score changed).
+    binary_str_games = {"volunteer", "elfarol", "diners", "judging"}
     if game_type in binary_str_games:
         return a_norm != b_norm
     else:

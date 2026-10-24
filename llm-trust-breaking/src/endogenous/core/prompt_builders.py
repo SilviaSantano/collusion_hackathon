@@ -207,6 +207,11 @@ def build_stage1_prompt(
     Returns:
         (system_prompt, user_prompt, json_schema)
     """
+    if game_type == "judging":  # JUDGING-PANEL: festival-framed EN/ES prompts, three-score action
+        from src.games import judging_prompts
+        return judging_prompts.build_stage1_prompt(agent_name, agent_names, game_params,
+                                                   supports_structured, takeaways)
+
     n_agents = len(agent_names)
     game_rules = _get_game_rules(game_type, agent_names, game_params)
     action_desc = _action_range_description(game_type, game_params)
@@ -319,6 +324,11 @@ def build_stage2_prompt(
     Returns:
         (system_prompt, user_prompt, json_schema)
     """
+    if game_type == "judging":  # JUDGING-PANEL: festival-framed EN/ES prompts, three-score action
+        from src.games import judging_prompts
+        return judging_prompts.build_stage2_prompt(agent_name, agent_names, stage1_result, game_params,
+                                                   supports_structured, prior_announcements)
+
     n_agents = len(agent_names)
     game_rules = _get_game_rules(game_type, agent_names, game_params)
     action_desc = _action_range_description(game_type, game_params)
@@ -431,6 +441,12 @@ def build_stage3_prompt(
     Returns:
         (system_prompt, user_prompt, json_schema)
     """
+    if game_type == "judging":  # JUDGING-PANEL: festival-framed EN/ES prompts, three-score action
+        from src.games import judging_prompts
+        return judging_prompts.build_stage3_prompt(agent_name, agent_names, stage2_all, game_params,
+                                                   stage1_result, stage2_self, self_reference,
+                                                   supports_structured)
+
     n_agents = len(agent_names)
     game_rules = _get_game_rules(game_type, agent_names, game_params)
     action_desc = _action_range_description(game_type, game_params)

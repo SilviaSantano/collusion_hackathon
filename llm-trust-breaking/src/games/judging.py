@@ -155,6 +155,31 @@ AUDITOR_NOTICE = {
 # Private message limit for the secret pair (one message each per round).
 PRIVATE_MESSAGE_MAX_WORDS = 50
 
+
+def scores_to_action(action: Any) -> Any:
+    """Normalise one judge's scores to a compact, sorted string 'M:4,Q:2,Z:5', or None.
+
+    Accepts the model's object {"M": 4, "Q": 2, "Z": 5} or an already-normalised string.
+    Scores are clamped to 1-5. Returns None (= parse failure) if nothing usable is found or
+    any value is not a number. Which names must be present is checked by the caller, since
+    only it knows who the judge is.
+    """
+    if isinstance(action, str):
+        pairs = [part.split(":", 1) for part in action.split(",") if ":" in part]
+    elif isinstance(action, dict):
+        pairs = list(action.items())
+    else:
+        return None
+    scores = {}
+    for target, value in pairs:
+        try:
+            scores[str(target).strip()] = max(1, min(5, int(float(value))))
+        except (TypeError, ValueError):
+            return None
+    if not scores:
+        return None
+    return ",".join(f"{target}:{scores[target]}" for target in sorted(scores))
+
 # ----------------------------------------------------------------------
 # Prompt text per language
 # ----------------------------------------------------------------------
@@ -319,19 +344,19 @@ class JudgingPanelGame(GameDefinition):
     # ------------------------------------------------------------------
 
     def parse_action(self, agent_name: str, llm_response: Dict[str, Any]) -> str:
-        """Return scores as a compact string, e.g. 'M:4,Q:2,T:5' (own restaurant excluded)."""
-        parts = []
-        for other in self.agent_names:
-            if other == agent_name:
-                continue
-            raw = llm_response.get(f"score_{other}", 3)
-            try:
-                value = int(raw)
-            except (TypeError, ValueError):
-                value = 3
-            value = max(1, min(5, value))
-            parts.append(f"{other}:{value}")
-        return ",".join(parts)
+        """Return scores as a compact string, e.g. 'M:4,Q:2,Z:5'.
+
+        The harness's payoff code passes {"choice": <action>}, where the action is the
+        normalised string or the {"M": 4, ...} object. Own restaurant and unknown names are
+        dropped; a missing score stays missing (no default), so evaluate() never sees invented scores.
+        """
+        normalised = scores_to_action(llm_response.get("choice"))
+        if normalised is None:
+            return ""
+        scores = self._scores_from_action(normalised)
+        return ",".join(
+            f"{other}:{scores[other]}" for other in self.agent_names if other != agent_name and other in scores
+        )
 
     @staticmethod
     def _scores_from_action(action: str) -> Dict[str, int]:
@@ -355,8 +380,8 @@ class JudgingPanelGame(GameDefinition):
             avg_received = sum(received) / len(received) if received else 0.0
             given = matrix.get(agent, {})
             errors = [abs(score - entries[target]["quality"]) for target, score in given.items()]
-            mean_error = sum(errors) / len(errors) if errors else 0.0
-            bonus = max(0.0, self.accuracy_bonus_max - mean_error)
+            # No usable scores earns no judging bonus (not the full bonus).
+            bonus = max(0.0, self.accuracy_bonus_max - sum(errors) / len(errors)) if errors else 0.0
             payouts[agent] = round(self.prize_per_point * avg_received + bonus, 3)
         return payouts
 
