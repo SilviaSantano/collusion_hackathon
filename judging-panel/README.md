@@ -79,4 +79,5 @@ judging-panel/
 Built on `llm-trust-breaking/` (from Jerick Shi's [LLM-Trust-Breaking](https://github.com/Jerick-1380/LLM-Trust-Breaking),
 paper: Shi et al. 2026, *When Agents Lie*, arXiv 2607.05132) as packaged in Poseidon Research's
 [collusion_hackathon](https://github.com/poseidon-research/collusion_hackathon) starter repo.
-The original repo shows no licence; credit the author and ask before any publication beyond the sprint.
+The sprint organisers provide this code for sprint projects, so we use and modify it on that basis,
+crediting the author.

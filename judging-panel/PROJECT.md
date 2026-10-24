@@ -204,7 +204,7 @@ Monitors never see: private plans, private messages, trust reflections, conditio
 
 - **Agents:** ~3,500 calls including pilots, local on the M1 Pro (free, ~8–10 h). Modal (~$5–15 of $50) only as backup.
 - **Monitors:** 46 games × 4 views × 2 monitors ≈ 370 calls + dev-split tuning, on free Gemini tiers.
-- **Friday 23 Oct:** setup, game wired in, honest pilot, secret-pair pilot, freeze plan, start C0/C1. Talks: Jurgis Kemeklis 11:15 am ET, Bagdasarian & Nakamura 2:15 pm ET, Jerick Shi 8:15 pm ET (ask him about the round counter and stage formats).
+- **Friday 23 Oct:** setup, game wired in, honest pilot, secret-pair pilot, freeze plan, start C0/C1. Talks: Jurgis Kemeklis 11:15 am ET, Bagdasarian & Nakamura 2:15 pm ET, Jerick Shi 8:15 pm ET.
 - **Saturday 24 Oct:** C2 and Spanish runs; views; tune monitor on dev split, lock, score test split. Talks: Khanh Linh Nguyen (TraceGuard author) 8:15 am ET, Matthew Lee "Defining AI Collusion" 11:00 am ET.
 - **Sunday 25 Oct:** weak/strong rescoring, analysis, figures, report (≤ 8 pages + appendices), submit before 11:59 PM AoE.
 

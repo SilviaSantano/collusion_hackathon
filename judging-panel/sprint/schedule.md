@@ -18,9 +18,6 @@ on Discord and the Schedule tab.
 | Sat 24 Oct, 11:00 am ET / 15:00 UTC | Matthew Lee (Poseidon Research): "Defining AI Collusion" (in person at Collider, streamed) | https://luma.com/ai-collusion-research-sprint-matthew-lee |
 | **Sun 25 Oct, 11:59 pm AoE** | **Submission deadline** | |
 
-**Questions for Jerick Shi:** game instance lifecycle per trial; how `get_game_state` is called per
-round; multi-value actions in stages 1–2; adding a private-message stage; licence/reuse of the code.
-
 ## Speakers (short)
 
 - **Sumeet Motwani**: Oxford ML PhD (advisors Philip Torr, Christian Schroeder de Witt); RL post-training, multi-agent systems, AI security; lead author of "Secret Collusion among AI Agents: Multi-Agent Deception via Steganography" (NeurIPS 2024).

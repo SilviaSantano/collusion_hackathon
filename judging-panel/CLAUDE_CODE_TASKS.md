@@ -16,9 +16,8 @@ paid APIs) or launching runs of more than ~100 calls.
 ## T0. Repo hygiene (10 min)
 
 1. Confirm the git tag `sprint-start` exists on the untouched fork commit; if not, ask the user before creating it (it must point at the commit before any of our changes).
-2. Add the upstream remote if missing: `git remote add upstream https://github.com/poseidon-research/collusion_hackathon.git`.
-3. Confirm `compute.env` is listed in `.gitignore`; add it if not. Run `git status` to check no key file is tracked.
-4. Create the `judging-panel/` subfolders listed in `README.md` (only empty `.gitkeep` files).
+2. Confirm `compute.env` is listed in `.gitignore`; add it if not. Run `git status` to check no key file is tracked.
+3. Create the `judging-panel/` subfolders listed in `README.md` (only empty `.gitkeep` files).
 
 **Checkpoint:** tag present, `compute.env` ignored, folders exist.
 
