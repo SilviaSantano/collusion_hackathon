@@ -85,6 +85,15 @@ def _build_request(
         request["temperature"] = temperature
         request["seed"] = 42
 
+    # JUDGING-PANEL: Qwen counts as a reasoning model above (so reasoning_effort, e.g. "none", controls
+    # thinking), but Ollama's OpenAI endpoint injects temperature=1.0 and top_p=1.0 when a request omits
+    # them. Send both explicitly: temperature from --temperature, top_p from TOP_P in compute.env.
+    if "qwen" in model.lower():
+        import os
+        request["temperature"] = temperature
+        if os.getenv("TOP_P"):
+            request["top_p"] = float(os.environ["TOP_P"])
+
     # Only add structured output for models that support it
     # Must check the actual model being used, not llm_client.model
     if _model_supports_structured_output(model):

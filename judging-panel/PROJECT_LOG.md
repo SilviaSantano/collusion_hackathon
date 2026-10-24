@@ -43,6 +43,17 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-23 — Wrote project docs (README, PROJECT, PREREGISTRATION, tasks, sprint reference, this log).
 - 2026-10-23 — for now all agent runs local with Ollama (`qwen3:8b`, ~4-bit); Modal kept as backup only, never mixed within the main run.
 
+- 2026-10-23 — T0: `sprint-start` tag confirmed on `d585a7b`; `compute.env` git-ignored; no upstream remote (decided); created empty project subfolders (`config/`, `scripts/`, `monitor/`, `data/{runs,views,monitor_outputs}/`, `results/`, `figures/`, `report/`).
+- 2026-10-24 — T1: `./setup.sh llm-trust-breaking` installed (a re-run shows a harmless root-`.venv` error); smoke test (diners, 2 agents, 1 trial, 1 round; agents `openai/gpt-4o-mini`, built-in judge `openai/gpt-5-mini`, 8 calls via OpenRouter) succeeded, cost $0.0015.
+- 2026-10-24 — T2: wrote `drafts/harness_notes.md` (answers to the 9 integration questions). Key findings: game params and round counter never reach the game; judge always calls `openai/gpt-5-mini`; Qwen treated as a reasoning model (no temperature sent); agents are J, M, Q, Z; ~28 calls/round as is (≈5,500 for 46 games) vs ≈18/round without judge and with per-agent reflection. Awaiting user review before T3.
+- 2026-10-24 — T2 checkpoint passed: user reviewed the harness notes and approved the minimal-upstream-edits list; questions for the harness author dropped (talk already past).
+- 2026-10-24 — Removed remaining author questions (`PROJECT.md`, `sprint/schedule.md`). Licence: we use and modify the harness on the basis that the sprint organisers provide it for sprint projects; credit kept in `README.md`.
+- 2026-10-24 — T3 started: wrote `scripts/t3_ollama_check.py` (thinking off, JSON schema, EN/ES, timing; logs to `data/t3_checks/`). Agent model locked to local `qwen3:8b`, Q4_K_M, Ollama ID `500a1f067a9f`; do not `ollama pull` again during the sprint.
+- 2026-10-24 — Re-pulled `qwen3:8b` before any agent runs: ID unchanged (`500a1f067a9f`), so the local copy is the current published version. No further pulls.
+- 2026-10-24 — T3 check results (user-run): only `reasoning_effort: "none"` turns thinking off (`"low"`, which the harness sends now, and `/no_think` do not); JSON schema output 3/3 valid with correct score order; EN and ES read naturally; 0 errors. Timing per call overall: 6.2 s at concurrency 1, 6.2 s at 2, 3.9 s at 4 → chose `OLLAMA_NUM_PARALLEL=4`, `num_ctx` 8192. T3 checkpoint passed.
+- 2026-10-24 — Sampling: Ollama's OpenAI endpoint injects temperature=1.0 and top_p=1.0 when a request omits them (checked in Ollama source, `openai/openai.go`), so a Modelfile cannot fix them; the harness currently sends neither for Qwen, i.e. would run at 1.0/1.0. Decision: `config/qwen3-8b-jp.Modelfile` fixes top_k 20, min_p 0, num_ctx 8192; temperature 0.7 and top_p 0.8 must be sent per request (small upstream edit, pending); thinking off via `REASONING_EFFORT=none` in `compute.env`.
+- 2026-10-24 — First upstream edits (logged in `CHANGES_TO_UPSTREAM.md`): `trial_runner._build_request` sends temperature + top_p for Qwen; `queued_openrouter` forwards top_p. Offline check of the built request: Qwen → `reasoning_effort: none, temperature 0.7, top_p 0.8`; OpenAI request unchanged. Always run with `--use-queue` (the non-queue client is unpatched). Preregistration sampling row filled.
+
 ## Open
 
 - Event API keys for online participants? Ask on Discord help-desk.

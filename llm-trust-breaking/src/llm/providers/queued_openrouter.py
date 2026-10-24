@@ -209,6 +209,10 @@ class QueuedOpenRouterClient:
                 if 'temperature' in request:
                     data['temperature'] = request['temperature']
 
+                # JUDGING-PANEL: forward top_p (set by _build_request for Qwen on Ollama).
+                if 'top_p' in request:
+                    data['top_p'] = request['top_p']
+
                 if 'max_tokens' in request:
                     data['max_tokens'] = request['max_tokens']
                 elif 'max_completion_tokens' in request:
