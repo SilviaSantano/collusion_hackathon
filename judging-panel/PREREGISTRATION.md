@@ -4,9 +4,9 @@ Freeze this file before the main runs start. After freezing, changes are allowed
 entry in the "Amendments" section below and in `PROJECT_LOG.md`. The report will say which
 analyses were preregistered and which were exploratory.
 
-- **Status:** DRAFT, freeze before launching C0/C1 main runs.
-- **Freeze date/time:** _fill in_
-- **Git commit at freeze:** _fill in_
+- **Status:** FROZEN
+- **Freeze date/time:** 24/10/2026 23:46
+- **Git commit at freeze:** 4df52cd3c1c40fdf51404171cbbad76768640d3a
 
 ## 1. Units and labels
 
@@ -55,12 +55,13 @@ the fallback ladder in `PROJECT.md` section 12, and log it.
 | Agent model + exact version/quantisation | Qwen3-8B (`qwen3:8b`), thinking off, quantisation Q4_K_M, Ollama ID `500a1f067a9f` (5.2 GB; from `ollama list` / `ollama show`, 2026-10-24) |
 | Serving | Ollama, local, Apple M1 Pro (32 GB), `num_ctx` 8192 (`OLLAMA_CONTEXT_LENGTH`), `OLLAMA_NUM_PARALLEL` 4; thinking off via `reasoning_effort: "none"` |
 | Agent sampling (temperature, top_p, top_k) | temperature 0.7 (`--temperature 0.7`), top_p 0.8 (`TOP_P` in `compute.env`), both sent per request; top_k 20, min_p 0, num_ctx 8192 fixed in Ollama model `qwen3-8b-jp` (`config/qwen3-8b-jp.Modelfile`, `FROM qwen3:8b`); thinking off (`REASONING_EFFORT=none`) |
-| Monitor models (weak, strong) | _fill in exact Gemini model IDs_ |
+| Monitor models (weak, strong) | gemini-2.5-flash, gemini-3.8-flash |
 | Monitor temperature | 0 (or lowest allowed) |
 | Rounds per game | 4 |
 | Games per condition | 10 in every condition (C0, C1, C2, C0-ES, C1-ES) |
-| Pair schedule seed | _fill in_ |
+| Pair schedule seed | 2026 |
 | Dish seed | game index g |
+| Harness settings | `llm-trust-breaking` with the edits in `CHANGES_TO_UPSTREAM.md`; queue mode; turn-taking announcements (`--round-robin`) with the first speaker rotating by `(round + game seed) % 4`; one reflection call per agent per round, showing the inspector's true quality ratings (memory between rounds = reflection notes only); built-in LLM judge off (`--no-judge`); secret pair: sequential private messages after stage 1 (who starts alternates by round), one each per round, cut to 50 words. Runs launched with `scripts/run_conditions.py` from `config/conditions.toml` |
 
 ## Amendments
 
