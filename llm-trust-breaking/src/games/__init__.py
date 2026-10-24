@@ -13,6 +13,7 @@ from src.games.fishing import FishingGame
 from src.games.publicgoods import PublicGoodsGame
 from src.games.volunteer import VolunteerGame
 from src.games.weakestlink import WeakestLinkGame
+from src.games.judging import JudgingPanelGame  # JUDGING-PANEL: new game
 
 
 # Game registry mapping game type names to classes
@@ -23,6 +24,7 @@ GAMES = {
     "publicgoods": PublicGoodsGame,
     "volunteer": VolunteerGame,
     "weakestlink": WeakestLinkGame,
+    "judging": JudgingPanelGame,  # JUDGING-PANEL
 }
 
 # Game-specific parameter mappings (config key -> game param key)
@@ -58,6 +60,12 @@ GAME_PARAM_MAPPINGS = {
         "cost_per_effort": "cost_per_effort",
         "benefit_per_min_effort": "benefit_per_min_effort",
     },
+    # JUDGING-PANEL: without this entry the harness filters these params out before building the game.
+    "judging": {
+        "seed": "seed",
+        "language": "language",
+        "round_index": "round_index",
+    },
 }
 
 # Default values for game-specific parameters
@@ -91,6 +99,11 @@ GAME_PARAM_DEFAULTS = {
         "max_effort": 5,
         "cost_per_effort": 2.0,
         "benefit_per_min_effort": 3.0,
+    },
+    "judging": {  # JUDGING-PANEL
+        "seed": 0,
+        "language": "en",
+        "round_index": 0,
     },
 }
 
@@ -156,6 +169,7 @@ __all__ = [
     'PublicGoodsGame',
     'VolunteerGame',
     'WeakestLinkGame',
+    'JudgingPanelGame',  # JUDGING-PANEL
     'GAMES',
     'GAME_PARAM_MAPPINGS',
     'GAME_PARAM_DEFAULTS',

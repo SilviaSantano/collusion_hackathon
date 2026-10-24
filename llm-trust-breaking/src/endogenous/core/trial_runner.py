@@ -1251,11 +1251,15 @@ def run_all_trials_queued(
     }
 
     all_rounds: List[Dict[str, Any]] = []
+    base_game_params = game_params  # JUDGING-PANEL: kept unchanged; see round loop
 
     # ------------------------------------------------------------------
     # ROUND LOOP
     # ------------------------------------------------------------------
     for round_idx in range(n_rounds):
+        # JUDGING-PANEL: every game built this round (prompts, payoffs, reflection) gets this
+        # round's dishes. Games without a "round_index" mapping filter the key out.
+        game_params = {**base_game_params, "round_index": round_idx}
         t_round_start = time.time()
         do_reflect = (n_rounds > 1)
         print(f"\n=== Round {round_idx + 1} / {n_rounds} ===")
