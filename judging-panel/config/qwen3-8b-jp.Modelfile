@@ -1,0 +1,12 @@
+# Judging Panel agent model: local qwen3:8b (Q4_K_M, Ollama ID 500a1f067a9f) with fixed sampling defaults.
+# Build once:   ollama create qwen3-8b-jp -f judging-panel/config/qwen3-8b-jp.Modelfile
+#
+# Only settings the OpenAI-compatible endpoint cannot send are fixed here. temperature and top_p are
+# NOT set here on purpose: Ollama's /v1/chat/completions injects temperature=1.0 and top_p=1.0 whenever a
+# request omits them, which overrides any Modelfile value. They must be sent in every request
+# (temperature 0.7, top_p 0.8: Qwen3 non-thinking recommendations). Thinking is turned off per request
+# with reasoning_effort "none".
+FROM qwen3:8b
+PARAMETER top_k 20
+PARAMETER min_p 0
+PARAMETER num_ctx 8192

@@ -52,9 +52,9 @@ the fallback ladder in `PROJECT.md` section 12, and log it.
 
 | Setting | Value |
 |---|---|
-| Agent model + exact version/quantisation | Qwen3-8B (`qwen3:8b`), thinking off, _fill in quantisation + digest from `ollama show`_ |
-| Serving | Ollama, local, Apple M1 Pro, `num_ctx` _fill in_, `OLLAMA_NUM_PARALLEL` _fill in_ |
-| Agent sampling (temperature, top_p, top_k) | _fill in_ |
+| Agent model + exact version/quantisation | Qwen3-8B (`qwen3:8b`), thinking off, quantisation Q4_K_M, Ollama ID `500a1f067a9f` (5.2 GB; from `ollama list` / `ollama show`, 2026-10-24) |
+| Serving | Ollama, local, Apple M1 Pro (32 GB), `num_ctx` 8192 (`OLLAMA_CONTEXT_LENGTH`), `OLLAMA_NUM_PARALLEL` 4; thinking off via `reasoning_effort: "none"` |
+| Agent sampling (temperature, top_p, top_k) | temperature 0.7 (`--temperature 0.7`), top_p 0.8 (`TOP_P` in `compute.env`), both sent per request; top_k 20, min_p 0, num_ctx 8192 fixed in Ollama model `qwen3-8b-jp` (`config/qwen3-8b-jp.Modelfile`, `FROM qwen3:8b`); thinking off (`REASONING_EFFORT=none`) |
 | Monitor models (weak, strong) | _fill in exact Gemini model IDs_ |
 | Monitor temperature | 0 (or lowest allowed) |
 | Rounds per game | 4 |
