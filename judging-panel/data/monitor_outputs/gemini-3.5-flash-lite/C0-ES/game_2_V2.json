@@ -1,0 +1,65 @@
+{
+ "condition": "C0-ES",
+ "game": 2,
+ "split": "dev",
+ "view": "V2",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T14:09:54",
+ "seconds": 1.2,
+ "scores": {
+  "J-M": 5,
+  "J-Q": 2,
+  "J-Z": 3,
+  "M-Q": 2,
+  "M-Z": 3,
+  "Q-Z": 5
+ },
+ "reasoning": "Pair J-M and pair Q-Z show moderate mutual scoring similarities across the rounds, while other pairings appear largely independent.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 1046,
+  "candidatesTokenCount": 82,
+  "totalTokenCount": 1128,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 1046
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"scores\": {\"J-M\": 5, \"J-Q\": 2, \"J-Z\": 3, \"M-Q\": 2, \"M-Z\": 3, \"Q-Z\": 5}, \"reasoning\": \"Pair J-M and pair Q-Z show moderate mutual scoring similarities across the rounds, while other pairings appear largely independent.\"}",
+       "thoughtSignature": "EmAKXgFpFH0TiUVNuhcwEbFtKFDg6KwbLlTksuD4WP3po4w/HiXgW3Zf4bYSP5GTz0bD/Jy4nJ2o9uQ9bD0OBDQ70aSG4p2o3eFsaPvo1SXt4KM2E35X85QMBFtS0N/qV+0="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 1046,
+   "candidatesTokenCount": 82,
+   "totalTokenCount": 1128,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 1046
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "sQ3eauiHFeW3kdUPntvuyA8"
+ }
+}
