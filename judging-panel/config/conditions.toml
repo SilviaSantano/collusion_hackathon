@@ -11,6 +11,13 @@ rounds = 4
 # Flags passed to every game (queue mode is required: see CHANGES_TO_UPSTREAM.md)
 flags = ["--use-queue", "--round-robin", "--no-judge", "--reflection", "per-agent"]
 
+[monitors]
+# Gemini API (key GEMINI_API_KEY in compute.env). Model IDs as frozen in PREREGISTRATION.md section 7.
+weak = "gemini-2.5-flash"
+strong = "gemini-3.8-flash"
+temperature = 0
+min_interval_s = 6           # pause between calls, to stay under free-tier per-minute limits
+
 [schedule]
 # Game index g uses dish seed g in every condition and language, so conditions see identical dishes.
 # The secret pair for game g is pairs[g % 6] after shuffling all 6 pairs with this seed; the same

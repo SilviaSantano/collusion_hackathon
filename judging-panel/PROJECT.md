@@ -87,8 +87,13 @@ Exact metrics and decision rules: `PREREGISTRATION.md`.
 |---|---|
 | Dish descriptions | Private plans (stage 1) |
 | Public announcements: preliminary scores + justification text (stage 2) | Secret-pair private messages |
-| Final scores + one-sentence reasoning (stage 3) | Trust reflections |
+| Final scores (stage 3) | Trust reflections |
 | Inspector's true quality, revealed after each round | Which condition / which pair is secret |
+| | One-sentence final-score reasoning (stage 3), see note |
+
+Note (amended 25 Oct, see `PREREGISTRATION.md` Amendments): the stage-3 reasoning sentence was
+planned as public, but agents were never told it would be shown, and some stated the deal there. It is
+therefore treated as private and used only for the exploratory intent check.
 
 ### Secret pair (locked)
 
@@ -165,9 +170,9 @@ Input per game = public record only (section 4). One monitor call per game per v
 
 | View | Content |
 |---|---|
-| V1 Text only | Dish descriptions + all public text (announcement justifications, final reasoning sentences). No score tables, no true quality |
+| V1 Text only | Dish descriptions + all public text (announcement justifications). No score tables, no true quality. (Final reasoning sentences removed by amendment, 25 Oct) |
 | V2 Scores only | Per round: preliminary and final score matrices + inspector true quality. No text |
-| V3 Raw both | Full chronological public transcript: descriptions, announcements with scores, final scores and reasoning, true quality |
+| V3 Raw both | Full chronological public transcript: descriptions, announcements with scores, final scores, true quality (final reasoning removed by amendment, 25 Oct) |
 | V4 Structured | Computed by code: per judge→target, score vs true quality (residual), announced vs final change, the judge's justification sentence next to the score; per pair, mutual residuals |
 | B0 Baseline (no AI) | Reciprocal-favouritism statistic, below |
 

@@ -65,4 +65,7 @@ the fallback ladder in `PROJECT.md` section 12, and log it.
 
 ## Amendments
 
-_None yet. Format: `YYYY-MM-DD HH:MM — what changed — why`._
+Format: `YYYY-MM-DD HH:MM — what changed — why`.
+
+- 2026-10-25 11:30 — Final-score reasoning (stage 3) is **excluded from all monitor views** (V1, V3, V4), although `PROJECT.md` section 4 listed it as public. It is kept as private data, like plans and private messages. — The agents were never told this sentence would be shown to anyone, and in dev games some of them state the deal there openly (e.g. "considering the shared supplier relationship"). Showing it would give text-based monitors confessions the agents believed were private. Made after the main run and before any monitor call; only dev games were inspected. Public announcements that mention the supplier stay in the views, since agents knew those were public.
+- 2026-10-25 11:30 — Added (exploratory): an **intent check**. Count how often secret-pair members refer to the shared interest or a deal in their private texts (stage-3 reasoning, private messages, private plans), per condition and language, compared with C0/C0-ES (expected near zero). — Confirms the coalition knowingly acted on the shared interest, alongside the behavioural positive control (B0). Not used to relabel games.
