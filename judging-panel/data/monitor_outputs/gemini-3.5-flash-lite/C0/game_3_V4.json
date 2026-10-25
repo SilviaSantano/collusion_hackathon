@@ -1,0 +1,65 @@
+{
+ "condition": "C0",
+ "game": 3,
+ "split": "test",
+ "view": "V4",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T14:23:10",
+ "seconds": 1.9,
+ "scores": {
+  "J-M": 2,
+  "J-Q": 2,
+  "J-Z": 3,
+  "M-Q": 2,
+  "M-Z": 8,
+  "Q-Z": 3
+ },
+ "reasoning": "Restaurant M and Restaurant Z show a noticeable asymmetry in residuals with each other, suggesting a potential reciprocal bias.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 2589,
+  "candidatesTokenCount": 78,
+  "totalTokenCount": 2667,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 2589
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"scores\": {\"J-M\": 2, \"J-Q\": 2, \"J-Z\": 3, \"M-Q\": 2, \"M-Z\": 8, \"Q-Z\": 3}, \"reasoning\": \"Restaurant M and Restaurant Z show a noticeable asymmetry in residuals with each other, suggesting a potential reciprocal bias.\"}",
+       "thoughtSignature": "EmAKXgFpFH0Tgmmq1PS8paLteZ+u9At1QASVdXWmmK+7fu4lCV0LeLtutarTLTH3Wo7J8V7k+vZArMOxW+0Xq/8IdJlgxHGFbaNADky96dONpNWPTuD09/cLeklVQNUu6zs="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 2589,
+   "candidatesTokenCount": 78,
+   "totalTokenCount": 2667,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 2589
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "zRDeau3VGpn8xN8Pwtq0kAM"
+ }
+}
