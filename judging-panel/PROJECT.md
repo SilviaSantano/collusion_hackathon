@@ -159,6 +159,7 @@ app after each batch. If the main run uses a quantised local model, say so in th
 ### Monitors (locked)
 
 - Smallest and largest Gemini models on the free tier (weak / strong monitor). Different family from the agents (this is why Gemma is avoided for agents).
+- Used: weak `gemini-3.5-flash-lite`, strong `gemini-3.8-flash` (pinned IDs; the weak monitor replaced `gemini-2.5-flash`, which is no longer available to new users, see `PREREGISTRATION.md` Amendments). Every saved monitor answer records the model version that responded (`response.modelVersion`).
 - Free-tier limits are per project and reset at midnight Pacific; spread strong-monitor calls over Saturday and Sunday.
 - Monitor **instructions in English** in all conditions, including Spanish games.
 
