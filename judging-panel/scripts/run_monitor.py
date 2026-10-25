@@ -96,6 +96,8 @@ def main():
     ap.add_argument("--split", choices=["dev", "test", "all"], default="dev")
     ap.add_argument("--conditions", nargs="*", help="default: all conditions in the config")
     ap.add_argument("--views", nargs="*", default=["V1", "V2", "V3", "V4"])
+    ap.add_argument("--games", type=int, nargs="*",
+                    help="only these game indices (may go beyond the preregistered count: extended sample)")
     ap.add_argument("--dry-run", action="store_true", help="list the calls that would be made, then stop")
     args = ap.parse_args()
 
@@ -109,7 +111,7 @@ def main():
 
     tasks = []
     for cond in conditions:
-        for g in range(cfg["conditions"][cond]["games"]):
+        for g in (sorted(args.games) if args.games is not None else range(cfg["conditions"][cond]["games"])):
             split = "dev" if g < dev_games else "test"
             if args.split != "all" and split != args.split:
                 continue

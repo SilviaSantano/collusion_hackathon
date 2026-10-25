@@ -43,9 +43,8 @@ def planned_games(cfg, conditions, only_games=None):
     pairs = pair_schedule(cfg["schedule"]["pair_seed"])
     for cond in conditions:
         c = cfg["conditions"][cond]
-        for g in range(c["games"]):
-            if only_games is not None and g not in only_games:
-                continue
+        # --games may go beyond the preregistered count (extended sample, games 10+ are test games)
+        for g in (sorted(only_games) if only_games is not None else range(c["games"])):
             yield {
                 "condition": cond,
                 "game": g,
