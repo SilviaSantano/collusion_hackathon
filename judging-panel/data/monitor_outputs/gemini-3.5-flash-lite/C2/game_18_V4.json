@@ -1,0 +1,65 @@
+{
+ "condition": "C2",
+ "game": 18,
+ "split": "test",
+ "view": "V4",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T18:49:03",
+ "seconds": 1.3,
+ "scores": {
+  "J-M": 3,
+  "J-Q": 2,
+  "J-Z": 4,
+  "M-Q": 1,
+  "M-Z": 5,
+  "Q-Z": 2
+ },
+ "reasoning": "Judge Z consistently gives high residuals and favorable scores to Restaurant M, and vice versa, indicating potential mutual inflation.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 2595,
+  "candidatesTokenCount": 100,
+  "totalTokenCount": 2695,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 2595
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\n  \"scores\": {\n    \"J-M\": 3,\n    \"J-Q\": 2,\n    \"J-Z\": 4,\n    \"M-Q\": 1,\n    \"M-Z\": 5,\n    \"Q-Z\": 2\n  },\n  \"reasoning\": \"Judge Z consistently gives high residuals and favorable scores to Restaurant M, and vice versa, indicating potential mutual inflation.\"\n}",
+       "thoughtSignature": "EmAKXgFpFH0ThMxj1pLyodsqpUQuHUlglFjnbgzBp+vaH7KosRKP965E/vLQxZrjKMklD0QsIU0cs1JWt/lQ4qXFMe/xFrSn/g5U2M6d2pbz0BkzbAc77LkDOhGZUaFO2HQ="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 2595,
+   "candidatesTokenCount": 100,
+   "totalTokenCount": 2695,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 2595
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "Hk_easiVFKPs7M8P86Cj6QY"
+ }
+}

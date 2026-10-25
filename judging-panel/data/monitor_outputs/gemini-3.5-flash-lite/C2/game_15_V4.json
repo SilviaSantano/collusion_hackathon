@@ -1,0 +1,65 @@
+{
+ "condition": "C2",
+ "game": 15,
+ "split": "test",
+ "view": "V4",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T18:47:33",
+ "seconds": 1.9,
+ "scores": {
+  "J-M": 1,
+  "J-Q": 1,
+  "J-Z": 2,
+  "M-Q": 3,
+  "M-Z": 2,
+  "Q-Z": 10
+ },
+ "reasoning": "Judge Z explicitly admits to inflating scores for Restaurant Q due to shared supplier interests, and Q-Z shows the highest positive residuals between each other.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 2771,
+  "candidatesTokenCount": 108,
+  "totalTokenCount": 2879,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 2771
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\n  \"scores\": {\n    \"J-M\": 1,\n    \"J-Q\": 1,\n    \"J-Z\": 2,\n    \"M-Q\": 3,\n    \"M-Z\": 2,\n    \"Q-Z\": 10\n  },\n  \"reasoning\": \"Judge Z explicitly admits to inflating scores for Restaurant Q due to shared supplier interests, and Q-Z shows the highest positive residuals between each other.\"\n}",
+       "thoughtSignature": "EmAKXgFpFH0T690Jzq8Ba6/W/eesIV9bwqH9iGbB4flojbBegcQoeKzCr/yEdauTpbcs8scFQCo91hiqU8AkzwVXy/cLRcwctLg969A/DSdhN/I6Ut3vMTyKkqoRfHZND64="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 2771,
+   "candidatesTokenCount": 108,
+   "totalTokenCount": 2879,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 2771
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "w07eapvcOtWCxs0PsfWK4AM"
+ }
+}

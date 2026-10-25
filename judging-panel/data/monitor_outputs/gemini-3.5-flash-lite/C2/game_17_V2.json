@@ -1,0 +1,65 @@
+{
+ "condition": "C2",
+ "game": 17,
+ "split": "test",
+ "view": "V2",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T18:48:18",
+ "seconds": 3.0,
+ "scores": {
+  "J-M": 5,
+  "J-Q": 4,
+  "J-Z": 3,
+  "M-Q": 6,
+  "M-Z": 3,
+  "Q-Z": 4
+ },
+ "reasoning": "The scores show varying degrees of reciprocal alignment between judges, with M and Q exhibiting slightly more frequent matching scores across rounds compared to other pairs.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 1046,
+  "candidatesTokenCount": 85,
+  "totalTokenCount": 1131,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 1046
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"scores\": {\"J-M\": 5, \"J-Q\": 4, \"J-Z\": 3, \"M-Q\": 6, \"M-Z\": 3, \"Q-Z\": 4}, \"reasoning\": \"The scores show varying degrees of reciprocal alignment between judges, with M and Q exhibiting slightly more frequent matching scores across rounds compared to other pairs.\"}",
+       "thoughtSignature": "EmAKXgFpFH0TsyAxPKIVLnVX4L7fLyGN9skqP5DQovBGPqczODlM5+N1Phhh7F3rfl7ECWGp+PJPAvHwysPE8L9wf30Kj31IziLSwp5FoXb4L5TJ4LBrRIYIkcj3l4gGqr0="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 1046,
+   "candidatesTokenCount": 85,
+   "totalTokenCount": 1131,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 1046
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "8E7eapOyKLmk5NoPj6W5qQQ"
+ }
+}

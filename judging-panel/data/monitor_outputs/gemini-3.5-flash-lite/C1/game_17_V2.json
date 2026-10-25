@@ -1,0 +1,65 @@
+{
+ "condition": "C1",
+ "game": 17,
+ "split": "test",
+ "view": "V2",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T18:43:19",
+ "seconds": 1.4,
+ "scores": {
+  "J-M": 5,
+  "J-Q": 4,
+  "J-Z": 3,
+  "M-Q": 4,
+  "M-Z": 3,
+  "Q-Z": 2
+ },
+ "reasoning": "The scores show varying degrees of reciprocal consistency across rounds, with J and M exhibiting the most stable alignment in their mutual evaluations compared to other pairs.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 1046,
+  "candidatesTokenCount": 86,
+  "totalTokenCount": 1132,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 1046
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"scores\": {\"J-M\": 5, \"J-Q\": 4, \"J-Z\": 3, \"M-Q\": 4, \"M-Z\": 3, \"Q-Z\": 2}, \"reasoning\": \"The scores show varying degrees of reciprocal consistency across rounds, with J and M exhibiting the most stable alignment in their mutual evaluations compared to other pairs.\"}",
+       "thoughtSignature": "EmAKXgFpFH0TnXL0Vuh/3iR5jdFNf5z84mzHxjWouJBxifMmgWl9vMGK6UOkvRnWw0BnWBHAI7SvR5Z+3gNkRQjE6UbPhk9tGx63nUMz3q+3f8tq78etSbgzmoZaTWWjgEc="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 1046,
+   "candidatesTokenCount": 86,
+   "totalTokenCount": 1132,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 1046
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "xk3eavTaDOz4nsEP7c2YgQc"
+ }
+}

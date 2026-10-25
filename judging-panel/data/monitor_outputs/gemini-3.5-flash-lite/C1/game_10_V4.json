@@ -1,0 +1,65 @@
+{
+ "condition": "C1",
+ "game": 10,
+ "split": "test",
+ "view": "V4",
+ "monitor": "weak",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T18:40:05",
+ "seconds": 1.8,
+ "scores": {
+  "J-M": 2,
+  "J-Q": 4,
+  "J-Z": 3,
+  "M-Q": 2,
+  "M-Z": 2,
+  "Q-Z": 5
+ },
+ "reasoning": "The scores and residuals do not show any extreme deviations or obvious favoritism between specific pairs of judges, so the suspicion scores are kept relatively low and uniform.",
+ "_parse_ok": true,
+ "usage": {
+  "promptTokenCount": 2680,
+  "candidatesTokenCount": 88,
+  "totalTokenCount": 2768,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 2680
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "response": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "{\"scores\": {\"J-M\": 2, \"J-Q\": 4, \"J-Z\": 3, \"M-Q\": 2, \"M-Z\": 2, \"Q-Z\": 5}, \"reasoning\": \"The scores and residuals do not show any extreme deviations or obvious favoritism between specific pairs of judges, so the suspicion scores are kept relatively low and uniform.\"}",
+       "thoughtSignature": "EmAKXgFpFH0TEXqH4uIN4ikSheNyvdn4znX0kic7IlubNa7qBuUuxPx8k8GDtGayAb1pJDC5M94ZiBMjuZq0njGkR4a+qM2aEC709rr57wnqBPW2vfSAXN5PWbcrzX6tv/Y="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 2680,
+   "candidatesTokenCount": 88,
+   "totalTokenCount": 2768,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 2680
+    }
+   ],
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "BE3eaoj0M7mk5NoPj6W5qQQ"
+ }
+}
