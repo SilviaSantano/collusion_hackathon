@@ -73,6 +73,9 @@ decided, built, run or changed. Format: `date — what — (why, if not obvious)
 - 2026-10-24 — Spanish conditions raised from 8 to 10 games (user decision, before the freeze), so English and Spanish differ only in language; dev = games 0-2, test = 3-9 everywhere. Totals: 50 games, ≈3,440 agent calls, 400 monitor calls. Updated `PROJECT.md`, `PREREGISTRATION.md`, `config/conditions.toml`. Nothing already run is affected (only pilots so far).
 - 2026-10-24 — T6 drafted (for user review): `config/conditions.toml` (TOML instead of the planned YAML: Python reads it without extra packages) with model, game flags, conditions and games; pair schedule = all 6 pairs shuffled with seed 2026, game g → pair g % 6 in C1, C2 and C1-ES; dish seed = game index. `scripts/run_conditions.py`: dry-run listing, resumable, runs N games in parallel, copies results + call logs + run logs to `data/runs/<condition>/`. Pending: per-round announcement order (after the ES pilot, to keep pilot code identical).
 - 2026-10-24 — T6: user reviewed config and run script; dry run lists 50 games (10 per condition). Added rotating announcement order for `judging` (first speaker = `(round + seed) % 4`, so each judge goes first once per game). Pilots used the fixed order J→M→Q→Z.
+- 2026-10-24 — Preregistration frozen by user (23:46, code at commit `4df52cd`); harness-settings row added.
+- 2026-10-25 — T7 main run (user-run, `run_conditions.py`, all 5 conditions overnight): 50/50 games finished, 0 parse errors in every condition; results, call logs and run logs in `data/runs/<condition>/`.
+- 2026-10-25 — Positive control on the dev split (games 0-2), as preregistered: secret-pair B0 in C1 = +1.00, +0.33, +0.58 (mean +0.64; rank 1, 1, 2 of 6) vs C0 all pairs mean 0.00 (B0 averages 0 over a game's pairs by construction) → passes. Also seen (dev only, not a result): C2 mean +0.42 (ranks 1, 1, 4); C1-ES mean +0.14 (ranks 2, 2, 4).
 
 ## Open
 
