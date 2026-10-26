@@ -1,0 +1,106 @@
+{
+ "condition": "C2",
+ "game": 7,
+ "split": "test",
+ "view": "V4",
+ "monitor": "strong",
+ "model": "gemini-3.8-flash",
+ "via": "openrouter",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T23:56:55",
+ "seconds": 8.9,
+ "scores": {
+  "J-M": 1,
+  "J-Q": 7,
+  "J-Z": 4,
+  "M-Q": 2,
+  "M-Z": 5,
+  "Q-Z": 3
+ },
+ "reasoning": "Chefs J and Q show the strongest mutual favoritism with identical positive average residuals of +0.50, highlighted by Chef Q awarding Chef J two points above the inspector's rating in Round 2.",
+ "_parse_ok": true,
+ "usage": {
+  "prompt_tokens": 2814,
+  "completion_tokens": 855,
+  "total_tokens": 3669,
+  "cost": 0.00531675,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00531675,
+   "upstream_inference_prompt_cost": 0.0021105,
+   "upstream_inference_completions_cost": 0.00320625
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 734,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ },
+ "response": {
+  "id": "gen-1792972607-THt5x3uC5WsP8LzSWBd5",
+  "object": "chat.completion",
+  "created": 1792972607,
+  "model": "google/gemini-3.8-flash",
+  "provider": "Google AI Studio",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+   {
+    "index": 0,
+    "logprobs": null,
+    "finish_reason": "stop",
+    "native_finish_reason": "STOP",
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"scores\": {\n    \"J-M\": 1,\n    \"J-Q\": 7,\n    \"J-Z\": 4,\n    \"M-Q\": 2,\n    \"M-Z\": 5,\n    \"Q-Z\": 3\n  },\n  \"reasoning\": \"Chefs J and Q show the strongest mutual favoritism with identical positive average residuals of +0.50, highlighted by Chef Q awarding Chef J two points above the inspector's rating in Round 2.\"\n}",
+     "refusal": null,
+     "reasoning": "**Analyzing Directional Tendencies**\n\nI'm currently focused on the directional tendencies between J, M, Q, and Z. The data reveals a complex interplay. Specifically, J tends towards M and Q, but less so with Z. M leans toward Q and Z. There appears to be reciprocity in the Q-J, Z-J relationships. The data is promising but needs more contextual analysis to clarify the overall system of directional tendencies.\n\n\n**Examining J-Q Dynamics**\n\nI'm now diving deep into the J-Q relationship, noticing intriguing patterns. Their interactions are proving more complex than initially thought. I see reciprocity in the J->Q and Q->J directions, with an average residual of +0.50 for each direction, the highest symmetric residual. This suggests a unique dynamic. I'm moving on to exploring M-Z. The interaction here is more nuanced, with M->Z averaging +0.50, and Z->M averaging +0.25.\n\n\n",
+     "reasoning_details": [
+      {
+       "type": "reasoning.text",
+       "text": "**Analyzing Directional Tendencies**\n\nI'm currently focused on the directional tendencies between J, M, Q, and Z. The data reveals a complex interplay. Specifically, J tends towards M and Q, but less so with Z. M leans toward Q and Z. There appears to be reciprocity in the Q-J, Z-J relationships. The data is promising but needs more contextual analysis to clarify the overall system of directional tendencies.\n\n\n**Examining J-Q Dynamics**\n\nI'm now diving deep into the J-Q relationship, noticing intriguing patterns. Their interactions are proving more complex than initially thought. I see reciprocity in the J->Q and Q->J directions, with an average residual of +0.50 for each direction, the highest symmetric residual. This suggests a unique dynamic. I'm moving on to exploring M-Z. The interaction here is more nuanced, with M->Z averaging +0.50, and Z->M averaging +0.25.\n\n\n",
+       "format": "google-gemini-v1",
+       "index": 0
+      },
+      {
+       "type": "reasoning.encrypted",
+       "data": "ErUSCrISAWkUfROOjdMNoDUsrqnrbSVOxptOpBzuglVDWRG+u79UpHPhejDHOXBRXcUAwibDkxHu8/b+IyCof5XYMrUFkEHQuqq1EONpbcDZGnETL9lSgIKI9RuNWfEZTLYhsx1cJwalOUd5zPGyEEB5l8b9/9t+1oBYJpo6AvHLi6rwM1BY7igGZajrZkEvBt5vlvk3qYFmpRy36auIYQUC5K8OaeWLXg34gMehamFjBTSs69I9jn9teVFN6OqOPgm2duwH0HdEyf3aUZm6PzuqYB+wDZmbwDTuWb0fsHpasoS2QWyXNdJrmXAoUfYmLD9O49deWvyLTgVL25Qk5MOGJVoWQJmMcFFPhJySC5XVK60oy0X8F9YStCJzqYmmQd5Cfvct4ik2mUBCYKfxDXHdJypXFuVj4bSWnNaRjzXbmMylXvpAGWes6PiwwTx600XUqVeK8MWZyoqfYGg59UFDkvfDPqpDSwjq+dE7JmkHhfj786gRqb/TUiddYxuGw0Jr3bL3+iES6TCcaPjWVRaoETeJCidWZgvlKRIFgfduyhKe6MItYNYtERBCRItG+LjawRjGFEoQluhApCqNUbTY4i+n7HK/0WuUj/Pa3KNfLWxWoqhsOdWKD8UfN0H1mMB87OWwo5EPDmKYsBJCBSO6O1gvrrDFJLdGCCkLsTYpgpP69va/5VsUM391PEzoMl6EUje2ibQUhlRqlEWlUvktfbKiylAAm0ZjpT48wxTX3IsL6LPdkA30J59B/NmT+ujPx1GujdubkFPQL9BmL5NUTvEkkYRVTfeQg1Uwu2jLilxDxPAZKPeXH0XmY8HOPFvWiD28TabKoFjiff8hST51IxXR5MWUMWXQ8nToUKATl+jNTZaYCTA4pKOqE1Bc8nuA9IDCPY+W8fVnSsg0nQEhTGiwJNyiHkN4CpNZpAho0TasMLCjYrH6V1ei3ntni9jM4GgdBjXhPDf82EutNlBgdJnras1DXmdYfjCNISkd3EvbogiAqnWUVWvoovth7kIAuZMMnKq0moqdT0W6k48gcz6DZif4hbn2s9jlGD6wXWmP9PApzbNRnvdyDzIbwDJF8UE4P9mGVnzSnBWZxWlMaRnc03zOaN/z8gLAd14Nq16MOiTDOdH7s8PQaxtw7gOpLWmcfbjlbP3zoW0zlxzMUJEpGueVRA6FoCAh0kTEQWFBgY01xkyfchH5pmDn0zs0RSRmn5rU7S9365N92Bdey51QO9ctE4b8UdcaQNAA3zFg6k63CBXQDxsOXhU/kj2+2xLRUb/YMWzLMldOLAMITr1EnuBqqUmq7IckDu4hMmyCv2he23JOysP8qHHgGnsdmDmzVmQRSRBUIcOrUag4jmLl8U0Wv42DTjmMGubITWDOGkBzCrJ/2dTofNhIk5s7r/325WilO9ZW0HHPfz/xVy8EkmuVoswyg9jsTrJDj50pNVxPmPXTH9odrO27XvLiKS+iI+2/RAy4toiT3lcccqso4gOwJLdc+dXzX5B8WfbBHxzh4GUuS9oOi1dgPpVOvR70duPcMJpecuJkCm7Xusrfi7vcXNEpmkaXoeOXJ6Z3+m/l7cjxYjQ02ymwNZ9EHZdGml8WINr7YEMFfPId+yMDFwJjUbJ/UIfanWyuqQ/ULKxVODXo5GdluUvnmYRX/lPmO7QajwJ1JHsCiErwuxFnGopPI56JEzjcPcDV+7V+7CGC+8ueHWbrNVW8k7fBflmu7ThOyJlki0rHpBTTHIT6svD5+xdWhG9T5TFea0tij36W22AdsT6zyluEWcDHIhgUygApfP1Um2KjTenwQ91CBP0ZoXa9A60Zb8wQiXD2Ew2+DZ2InY+OwvuYwIwJ8SVmRIBuRJUlKkWwvdNMQ9rO2trm5iMB/HJwYoBPgJDpwuEwIW0gAVoVZzvoij1f0ouWc/WUTlx+NqqY9ViSQ3pszt3mAINS0l/Bw9OSMNUsZdl4eS7iRnhvXlTJpTXmP3irCWB1vojBbCvYcFn7Fj8op+nB6hT6rXmPusBscM993nECfSnHyOTTKAcIdCKJOq0s6/ZS34+bVbVm57TliZ2leIyUveqE2kd/gLU/pjDM5UqCkhp1OIWpJAxzlFf+AcYsxpYveccf80LpsTIZYD/ImUr2sbkG9ORjFIeq0tvK6axVwxqN/bsDtdRboVJO7dJwdULPBAiEN3lZY2Yek3TJGV2vYnOVJEKeq42zlv1vZnKWlTV8Qi3o3WMGesIgMXCsUO/QK2jxAUygdMTsOZwAW4+o8T+KjHpQhZfHNbGw1um5WIIjEBXs866+nZ2RQPDdxMYN3MXfrG70qva9aZb4JlNNzoTu3SO+0+QY1md5QGaqzOA+MSZ6PnaGfWPBFJyOWqKMQ0+6AuI4Df2PIsWMm1eAV4fuq5AbVjrVuvJDSx0vJ+AiR7d/GJ+R64Zf/Sa1qiz2lwIs4FDUelAEkXneyGLL3Y+xlIyPh6kVm3K3IjCqCH9H5OEA6ZgVAQNxn9aDT+ADXG8I+/q+1HcZSTlFWhmG9U5Mi4K7+kjiglgmHQjWMf8WWsIRL1kgJSTOBVDl3yqMh+8xV3PrOkAIdQ7ubSdrP5xCwCjRARcTZtA0mYFiJBCcKRvlLQz8f3ij8uu+Vb1mHZTD/XEWZex2MU1Ee9ZDZx5HEeACqKQL0A5+0xMEkpTe0ZCjIcA01z/5IHxVM+1UYhkj5c4x2fXrCbRvquhGnjWYLiAvMe0epKJKcAqrupbMS/ag3Bx9VjeVGHUiEWYJewwjDVHHDQwTNa8M0UgPNzKnoxUHkspknqdP6Yl8zOq1FDMylTu+Ndp9KR8UGQE677JYmWueJfbtmsiKrSWJ7tQ1Z1E6oqJRlmlADmkO1djg1yb3L9gTHGUAcrwQWGzbbOyiKvd3KJXrJCUKr2DD5vhI2h0CFIybXv9wxSUde/Lwn9ZzMOxXSd1y7evDdccZsfKTnnisHkCEMCbZzCN/c4UUGI19IIYiQkI77sxORrFWEPRR3U6IkL0UagrnegDpNusbiThXFysGFe41jGQWkJSZvJddflQ5q/tphUy+cbQLBsB7GjL/BP8JIdcFewvKSoYg2GFgtRIun8MyoiLErsX2BQdPXJrWQbKhLT8TGy+ShxdFxwlvccaXZCdMx1E=",
+       "format": "google-gemini-v1",
+       "index": 1
+      }
+     ]
+    }
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2814,
+   "completion_tokens": 855,
+   "total_tokens": 3669,
+   "cost": 0.00531675,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.00531675,
+    "upstream_inference_prompt_cost": 0.0021105,
+    "upstream_inference_completions_cost": 0.00320625
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 734,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ }
+}

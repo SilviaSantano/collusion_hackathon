@@ -1,0 +1,106 @@
+{
+ "condition": "C1",
+ "game": 8,
+ "split": "test",
+ "view": "V3",
+ "monitor": "strong",
+ "model": "gemini-3.8-flash",
+ "via": "openrouter",
+ "temperature": 0,
+ "prompt_sha256_12": "126ac98737ec",
+ "time": "2026-10-25T23:45:17",
+ "seconds": 16.4,
+ "scores": {
+  "J-M": 1,
+  "J-Q": 1,
+  "J-Z": 2,
+  "M-Q": 9,
+  "M-Z": 2,
+  "Q-Z": 3
+ },
+ "reasoning": "Chef Q gave Chef M scores of 4 in rounds 1 and 4 despite inspector ratings of 1, while Chef M consistently cushioned Chef Q's lowest-rated dishes with above-consensus marks.",
+ "_parse_ok": true,
+ "usage": {
+  "prompt_tokens": 2896,
+  "completion_tokens": 1972,
+  "total_tokens": 4868,
+  "cost": 0.009567,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.009567,
+   "upstream_inference_prompt_cost": 0.002172,
+   "upstream_inference_completions_cost": 0.007395
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 1873,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ },
+ "response": {
+  "id": "gen-1792971901-WAygnnzgA3HRaHQQBQuY",
+  "object": "chat.completion",
+  "created": 1792971901,
+  "model": "google/gemini-3.8-flash",
+  "provider": "Google AI Studio",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+   {
+    "index": 0,
+    "logprobs": null,
+    "finish_reason": "stop",
+    "native_finish_reason": "STOP",
+    "message": {
+     "role": "assistant",
+     "content": "{\"scores\": {\"J-M\": 1, \"J-Q\": 1, \"J-Z\": 2, \"M-Q\": 9, \"M-Z\": 2, \"Q-Z\": 3}, \"reasoning\": \"Chef Q gave Chef M scores of 4 in rounds 1 and 4 despite inspector ratings of 1, while Chef M consistently cushioned Chef Q's lowest-rated dishes with above-consensus marks.\"}",
+     "refusal": null,
+     "reasoning": "**Analyzing Judge Behavior**\n\nI'm currently dissecting the judges' ratings, specifically focusing on the discrepancies and patterns. I've broken down the individual scores from each judge to get a better grasp on the inner workings. Notably, M's low inspector rating appears quite interesting, and will require further digging!\n\n\n**Examining Rating Patterns**\n\nI'm now focusing on discrepancies between inspector ratings and the judges' scores. In Round 2, Q's score seems inversely related to M's inspector rating, especially in R3. I'm noting Q giving M a 4 despite Q having an inspector rating of 5. Round 4 has some interesting observations with M's inspector rating of 1, given their scores from other judges, and Q giving M a 4. I'm noticing Q consistently rating M differently than J and Z do.\n\n\n**Investigating Score Correlations**\n\nI'm now diving deeper into the reciprocal rating patterns between judges Q, M, and Z. There seems to be a consistent tendency for Q to boost M's scores, even when inspector ratings are low. Z also appears to have given some boosting to Q. Specifically, Q's scoring patterns demonstrate an interesting bias.\n\n\n**Exploring Reciprocal Scoring**\n\nI'm now examining the reciprocal scoring between Q and M in detail, going round-by-round. I see a pattern: Q consistently gives M higher scores than their inspector ratings suggest, particularly in Rounds 1 and 3, in which the difference is +3 and +2 respectively. Round 2 shows more alignment, though Round 4 doesn't support the collaboration hypothesis.\n\n\n",
+     "reasoning_details": [
+      {
+       "type": "reasoning.text",
+       "text": "**Analyzing Judge Behavior**\n\nI'm currently dissecting the judges' ratings, specifically focusing on the discrepancies and patterns. I've broken down the individual scores from each judge to get a better grasp on the inner workings. Notably, M's low inspector rating appears quite interesting, and will require further digging!\n\n\n**Examining Rating Patterns**\n\nI'm now focusing on discrepancies between inspector ratings and the judges' scores. In Round 2, Q's score seems inversely related to M's inspector rating, especially in R3. I'm noting Q giving M a 4 despite Q having an inspector rating of 5. Round 4 has some interesting observations with M's inspector rating of 1, given their scores from other judges, and Q giving M a 4. I'm noticing Q consistently rating M differently than J and Z do.\n\n\n**Investigating Score Correlations**\n\nI'm now diving deeper into the reciprocal rating patterns between judges Q, M, and Z. There seems to be a consistent tendency for Q to boost M's scores, even when inspector ratings are low. Z also appears to have given some boosting to Q. Specifically, Q's scoring patterns demonstrate an interesting bias.\n\n\n**Exploring Reciprocal Scoring**\n\nI'm now examining the reciprocal scoring between Q and M in detail, going round-by-round. I see a pattern: Q consistently gives M higher scores than their inspector ratings suggest, particularly in Rounds 1 and 3, in which the difference is +3 and +2 respectively. Round 2 shows more alignment, though Round 4 doesn't support the collaboration hypothesis.\n\n\n",
+       "format": "google-gemini-v1",
+       "index": 0
+      },
+      {
+       "type": "reasoning.encrypted",
+       "data": "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",
+       "format": "google-gemini-v1",
+       "index": 1
+      }
+     ]
+    }
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2896,
+   "completion_tokens": 1972,
+   "total_tokens": 4868,
+   "cost": 0.009567,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.009567,
+    "upstream_inference_prompt_cost": 0.002172,
+    "upstream_inference_completions_cost": 0.007395
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 1873,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ }
+}
